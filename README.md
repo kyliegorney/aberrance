@@ -32,7 +32,13 @@ several types of aberrant behavior, including:
 
 ## Installation
 
-Install the development version from GitHub:
+Install the released version from CRAN:
+
+``` r
+install.packages("aberrance")
+```
+
+Alternatively, install the development version from GitHub:
 
 ``` r
 # install.packages("devtools")

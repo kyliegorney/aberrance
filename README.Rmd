@@ -30,7 +30,12 @@ The *aberrance* package contains a collection of functions for detecting several
 
 ## Installation
 
-Install the development version from GitHub:
+Install the released version from CRAN:
+```{r CRAN, eval = FALSE}
+install.packages("aberrance")
+```
+
+Alternatively, install the development version from GitHub:
 
 ```{r GitHub, eval = FALSE}
 # install.packages("devtools")
