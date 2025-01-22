@@ -9,7 +9,6 @@ detect_as(
   psi,
   xi = NULL,
   x = NULL,
-  d = NULL,
   r = NULL,
   y = NULL,
   interval = c(-4, 4),
@@ -25,15 +24,6 @@ score-based statistics are:
 \item \code{"GBT_S"} for the unconditional \eqn{GBT} statistic (van der Linden &
 Sotaridona, 2006).
 \item \code{"M4_S"} for the \eqn{M4} statistic (Maynes, 2014).
-}
-
-Options for score and distractor-based statistics are:
-\itemize{
-\item \code{"OMG_SD"} for the unconditional \eqn{\omega} statistic (Romero et al.,
-2015).
-\item \code{"GBT_SD"} for the unconditional \eqn{GBT} statistic (van der Linden &
-Sotaridona, 2006).
-\item \code{"M4_SD"} for the \eqn{M4} statistic (Maynes, 2014).
 }
 
 Options for response-based statistics are:
@@ -53,14 +43,6 @@ Wollack, 2024).
 2024).
 }
 
-Options for score, distractor, and response time-based statistics are:
-\itemize{
-\item \code{"OMG_SDT"} for the unconditional \eqn{\omega} statistic (Gorney &
-Wollack, 2024).
-\item \code{"GBT_SDT"} for the unconditional \eqn{GBT} statistic (Gorney & Wollack,
-2024).
-}
-
 Options for response and response time-based statistics are:
 \itemize{
 \item \code{"OMG_RT"} for the unconditional \eqn{\omega} statistic (Gorney &
@@ -74,8 +56,8 @@ Wollack, 2024).
 \item{xi}{A matrix of person parameters. If \code{NULL} (default), person
 parameters are estimated using maximum likelihood estimation.}
 
-\item{x, d, r, y}{Matrices of raw data. \code{x} is for the item scores, \code{d} the item
-distractors, \code{r} the item responses, and \code{y} the item log response times.}
+\item{x, r, y}{Matrices of raw data. \code{x} is for the item scores, \code{r} the item
+responses, and \code{y} the item log response times.}
 
 \item{interval}{The interval to search for the person parameters. Default is
 \code{c(-4, 4)}.}
@@ -181,7 +163,7 @@ out <- detect_as(
   x = x
 )
 
-# Setup for Examples 3 and 4 ------------------------------------------------
+# Setup for Example 3 -------------------------------------------------------
 
 # Settings
 set.seed(0)     # seed for reproducibility
@@ -199,50 +181,7 @@ ind <- ifelse(1:nrow(pair) \%in\% apply(
   which(pair[, 1] == p[1] & pair[, 2] == p[2])), 1, 0)
 names(ind) <- paste(pair[, 1], pair[, 2], sep = "-")
 
-# Example 3: Item Scores and Distractors ------------------------------------
-
-# Generate person parameters for the nested logit model
-xi <- MASS::mvrnorm(
-  N,
-  mu = c(theta = 0.00, eta = 0.00),
-  Sigma = matrix(c(1.00, 0.80, 0.80, 1.00), ncol = 2)
-)
-
-# Generate item parameters for the nested logit model
-psi <- cbind(
-  a = rlnorm(n, meanlog = 0.00, sdlog = 0.25),
-  b = rnorm(n, mean = 0.00, sd = 1.00),
-  c = runif(n, min = 0.05, max = 0.30),
-  lambda1 = rnorm(n, mean = 0.00, sd = 1.00),
-  lambda2 = rnorm(n, mean = 0.00, sd = 1.00),
-  lambda3 = rnorm(n, mean = 0.00, sd = 1.00),
-  zeta1 = rnorm(n, mean = 0.00, sd = 1.00),
-  zeta2 = rnorm(n, mean = 0.00, sd = 1.00),
-  zeta3 = rnorm(n, mean = 0.00, sd = 1.00)
-)
-
-# Simulate uncontaminated data
-dat <- sim(psi, xi)
-x <- dat$x
-d <- dat$d
-
-# Modify contaminated data by replacing 40\% of the copier scores and
-# distractors with source scores and distractors
-for (v in 1:length(c)) {
-  ci <- sample(1:n, size = n * 0.40)
-  x[c[v], ci] <- x[s[v], ci]
-  d[c[v], ci] <- d[s[v], ci]
-}
-
-# Detect answer similarity
-out <- detect_as(
-  method = c("OMG_S", "GBT_S", "OMG_SD", "GBT_SD"),
-  psi = psi,
-  x = x,
-  d = d
-)
-
-# Example 4: Item Responses -------------------------------------------------
+# Example 3: Item Responses -------------------------------------------------
 
 # Generate person parameters for the nominal response model
 xi <- cbind(eta = rnorm(N, mean = 0.00, sd = 1.00))

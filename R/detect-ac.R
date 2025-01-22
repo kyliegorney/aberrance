@@ -8,18 +8,13 @@
 #'   - `"GBT_S"` for the conditional \eqn{GBT} statistic (van der Linden &
 #'     Sotaridona, 2006).
 #'
-#'   Options for score and distractor-based statistics are:
-#'   - `"OMG_SD"` for the conditional \eqn{\omega} statistic (Wollack, 1997).
-#'   - `"GBT_SD"` for the conditional \eqn{GBT} statistic (van der Linden &
-#'     Sotaridona, 2006).
-#'
 #'   Options for response-based statistics are:
 #'   - `"OMG_R"` for the conditional \eqn{\omega} statistic (Wollack, 1997).
 #'   - `"GBT_R"` for the conditional \eqn{GBT} statistic (van der Linden &
 #'     Sotaridona, 2006).
 #'
-#' @param x,d,r Matrices of raw data. `x` is for the item scores, `d` the item
-#'   distractors, and `r` the item responses.
+#' @param x,r Matrices of raw data. `x` is for the item scores and `r` the item
+#'   responses.
 #'
 #' @inheritParams detect_pm
 #'
@@ -89,50 +84,7 @@
 #'   x = x
 #' )
 #'
-#' # Example 2: Item Scores and Distractors ------------------------------------
-#'
-#' # Generate person parameters for the nested logit model
-#' xi <- MASS::mvrnorm(
-#'   N,
-#'   mu = c(theta = 0.00, eta = 0.00),
-#'   Sigma = matrix(c(1.00, 0.80, 0.80, 1.00), ncol = 2)
-#' )
-#'
-#' # Generate item parameters for the nested logit model
-#' psi <- cbind(
-#'   a = rlnorm(n, meanlog = 0.00, sdlog = 0.25),
-#'   b = rnorm(n, mean = 0.00, sd = 1.00),
-#'   c = runif(n, min = 0.05, max = 0.30),
-#'   lambda1 = rnorm(n, mean = 0.00, sd = 1.00),
-#'   lambda2 = rnorm(n, mean = 0.00, sd = 1.00),
-#'   lambda3 = rnorm(n, mean = 0.00, sd = 1.00),
-#'   zeta1 = rnorm(n, mean = 0.00, sd = 1.00),
-#'   zeta2 = rnorm(n, mean = 0.00, sd = 1.00),
-#'   zeta3 = rnorm(n, mean = 0.00, sd = 1.00)
-#' )
-#'
-#' # Simulate uncontaminated data
-#' dat <- sim(psi, xi)
-#' x <- dat$x
-#' d <- dat$d
-#'
-#' # Modify contaminated data by replacing 40% of the copier scores and
-#' # distractors with source scores and distractors
-#' for (v in 1:length(c)) {
-#'   ci <- sample(1:n, size = n * 0.40)
-#'   x[c[v], ci] <- x[s[v], ci]
-#'   d[c[v], ci] <- d[s[v], ci]
-#' }
-#'
-#' # Detect answer copying
-#' out <- detect_ac(
-#'   method = c("OMG_S", "GBT_S", "OMG_SD", "GBT_SD"),
-#'   psi = psi,
-#'   x = x,
-#'   d = d
-#' )
-#'
-#' # Example 3: Item Responses -------------------------------------------------
+#' # Example 2: Item Responses -------------------------------------------------
 #'
 #' # Generate person parameters for the nominal response model
 #' xi <- cbind(eta = rnorm(N, mean = 0.00, sd = 1.00))
@@ -170,34 +122,30 @@
 detect_ac <- function(method,
                       psi,
                       xi = NULL,
-                      x = NULL, d = NULL, r = NULL,
+                      x = NULL, r = NULL,
                       interval = c(-4, 4),
                       alpha = 0.05) {
 
   # Checks
-  if (any(c("S", "SD") %in% extract(method, 2)) &&
-      ("R" %in% extract(method, 2))) {
+  if (any("S" %in% extract(method, 2)) && ("R" %in% extract(method, 2))) {
     stop("`method` may contain either score-based statistics or ",
          "response-based statistics, but not both.", call. = FALSE)
   }
-  if (any(c("S", "SD") %in% extract(method, 2))) {
+  if (any("S" %in% extract(method, 2))) {
     check_par("x", psi, xi)
-    if ("SD" %in% extract(method, 2)) {
-      check_par("d", psi, xi)
-    }
   } else if ("R" %in% extract(method, 2)) {
     check_par("r", psi, xi)
   }
   method <- match.arg(
     arg = unique(method),
-    choices = c("OMG_S", "GBT_S", "OMG_SD", "GBT_SD", "OMG_R", "GBT_R"),
+    choices = c("OMG_S", "GBT_S", "OMG_R", "GBT_R"),
     several.ok = TRUE
   )
-  check_data(x, d, r)
+  check_data(x, r)
 
   # Setup
-  N <- max(nrow(x), nrow(d), nrow(r))
-  n <- max(ncol(x), ncol(d), ncol(r))
+  N <- max(nrow(x), nrow(r))
+  n <- max(ncol(x), ncol(r))
   pair <- t(combn(N, 2))
   NN <- nrow(pair)
   pair <- rbind(pair, pair[, 2:1])
@@ -219,7 +167,7 @@ detect_ac <- function(method,
 
   # Estimate person parameters
   if (is.null(xi)) {
-    xi <- est(interval, psi, x = x, d = d, r = r)
+    xi <- est(interval, psi, x = x, r = r)
   }
 
   # Compute score-based statistics
@@ -240,32 +188,6 @@ detect_ac <- function(method,
       if ("GBT_S" %in% method) {
         stat[v, "GBT_S"] <- compute_GBT(s, p)
         stat[v + NN, "GBT_S"] <- compute_GBT(s, q)
-      }
-    }
-  }
-
-  # Compute score and distractor-based statistics
-  if (any(c("OMG_SD", "GBT_SD") %in% method)) {
-    m <- count(psi)
-    p_mat <- irt_p(m, psi, xi)
-    for (v in 1:NN) {
-      s_1 <- sum((x[pair[v, 1], ] == 1) & (x[pair[v, 2], ] == 1))
-      s_0 <- sum(d[pair[v, 1], ] == d[pair[v, 2], ], na.rm = TRUE)
-      s <- s_1 + s_0
-      p <- q <- rep(NA, times = n)
-      for (i in 1:n) {
-        p[i] <- p_mat[pair[v, 2], i, ifelse(
-          x[pair[v, 1], i] == 1, m[i], d[pair[v, 1], i])]
-        q[i] <- p_mat[pair[v, 1], i, ifelse(
-          x[pair[v, 2], i] == 1, m[i], d[pair[v, 2], i])]
-      }
-      if ("OMG_SD" %in% method) {
-        stat[v, "OMG_SD"] <- compute_OMG(s, p)
-        stat[v + NN, "OMG_SD"] <- compute_OMG(s, q)
-      }
-      if ("GBT_SD" %in% method) {
-        stat[v, "GBT_SD"] <- compute_GBT(s, p)
-        stat[v + NN, "GBT_SD"] <- compute_GBT(s, q)
       }
     }
   }
