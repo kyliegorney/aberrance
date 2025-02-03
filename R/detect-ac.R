@@ -36,7 +36,7 @@
 #' @seealso [detect_as()] to detect answer similarity.
 #'
 #' @examples
-#' # Setup for Examples 1 to 3 -------------------------------------------------
+#' # Setup for Examples 1 and 2 ------------------------------------------------
 #'
 #' # Settings
 #' set.seed(0)     # seed for reproducibility
