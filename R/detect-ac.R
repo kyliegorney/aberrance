@@ -175,7 +175,7 @@ detect_ac <- function(method,
     m <- count(psi, ignore = "lambda1")
     p_mat <- irt_p(m, psi, xi, ignore = "lambda1")
     for (v in 1:NN) {
-      s <- sum(x[pair[v, 1], ] == x[pair[v, 2], ])
+      s <- as.integer(x[pair[v, 1], ] == x[pair[v, 2], ])
       p <- q <- rep(NA, times = n)
       for (i in 1:n) {
         p[i] <- p_mat[pair[v, 2], i, x[pair[v, 1], i] + 1]
@@ -197,7 +197,7 @@ detect_ac <- function(method,
     m <- count(psi)
     p_mat <- irt_p(m, psi, xi)
     for (v in 1:NN) {
-      s <- sum(r[pair[v, 1], ] == r[pair[v, 2], ])
+      s <- as.integer(r[pair[v, 1], ] == r[pair[v, 2], ])
       p <- q <- rep(NA, times = n)
       for (i in 1:n) {
         p[i] <- p_mat[pair[v, 2], i, r[pair[v, 1], i]]

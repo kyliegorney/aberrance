@@ -6,6 +6,8 @@
 #'   score-based statistics are:
 #'   - `"OMG_S"` for the unconditional \eqn{\omega} statistic (Romero et al.,
 #'     2015).
+#'   - `"WOMG_S"` for the unconditional weighted \eqn{\omega} statistic (Trout &
+#'     Gorney, 2025).
 #'   - `"GBT_S"` for the unconditional \eqn{GBT} statistic (van der Linden &
 #'     Sotaridona, 2006).
 #'   - `"M4_S"` for the \eqn{M4} statistic (Maynes, 2014).
@@ -13,6 +15,8 @@
 #'   Options for response-based statistics are:
 #'   - `"OMG_R"` for the unconditional \eqn{\omega} statistic (Romero et al.,
 #'     2015).
+#'   - `"WOMG_R"` for the unconditional weighted \eqn{\omega} statistic (Trout &
+#'     Gorney, 2025).
 #'   - `"GBT_R"` for the unconditional \eqn{GBT} statistic (van der Linden &
 #'     Sotaridona, 2006).
 #'   - `"M4_R"` for the \eqn{M4} statistic (Maynes, 2014).
@@ -54,6 +58,9 @@
 #' answer-copying indices: Theory and practice. *Journal of Educational and
 #' Behavioral Statistics*, *40*(5), 435--453.
 #' 
+#' Trout, N., & Gorney, K. (2025). *Weighted answer similarity analysis*
+#' \[Manuscript submitted for publication].
+#'
 #' van der Linden, W. J., & Sotaridona, L. (2006). Detecting answer copying when
 #' the regular response process follows a known response model. *Journal of
 #' Educational and Behavioral Statistics*, *31*(3), 283--304.
@@ -117,7 +124,7 @@
 #'
 #' # Detect answer similarity
 #' out <- detect_as(
-#'   method = c("OMG_S", "GBT_S", "OMG_ST", "GBT_ST"),
+#'   method = c("OMG_S", "WOMG_S", "GBT_S", "OMG_ST", "GBT_ST"),
 #'   psi = psi,
 #'   x = x,
 #'   y = y
@@ -145,7 +152,7 @@
 #'
 #' # Detect answer similarity
 #' out <- detect_as(
-#'   method = c("OMG_S", "GBT_S"),
+#'   method = c("OMG_S", "WOMG_S", "GBT_S"),
 #'   psi = psi,
 #'   x = x
 #' )
@@ -197,7 +204,7 @@
 #'
 #' # Detect answer similarity
 #' out <- detect_as(
-#'   method = c("OMG_R", "GBT_R"),
+#'   method = c("OMG_R", "WOMG_R", "GBT_R"),
 #'   psi = psi,
 #'   r = r
 #' )
@@ -226,8 +233,8 @@ detect_as <- function(method,
   }
   method <- match.arg(
     arg = unique(method),
-    choices = c("OMG_S", "GBT_S", "M4_S",
-                "OMG_R", "GBT_R", "M4_R",
+    choices = c("OMG_S", "WOMG_S", "GBT_S", "M4_S",
+                "OMG_R", "WOMG_R", "GBT_R", "M4_R",
                 "OMG_ST", "GBT_ST",
                 "OMG_RT", "GBT_RT"),
     several.ok = TRUE
@@ -261,25 +268,28 @@ detect_as <- function(method,
   }
 
   # Compute score-based statistics
-  if (any(c("OMG_S", "GBT_S", "M4_S") %in% method)) {
+  if (any(c("OMG_S", "WOMG_S", "GBT_S", "M4_S") %in% method)) {
     m <- count(psi, ignore = "lambda1")
     p_mat <- irt_p(m, psi, xi, ignore = "lambda1")
     for (v in 1:NN) {
-      s <- sum(x[pair[v, 1], ] == x[pair[v, 2], ])
+      s <- as.integer(x[pair[v, 1], ] == x[pair[v, 2], ])
       p <- rowSums(p_mat[pair[v, 1], , ] * p_mat[pair[v, 2], , ], na.rm = TRUE)
       if ("OMG_S" %in% method) {
         stat[v, "OMG_S"] <- compute_OMG(s, p)
+      }
+      if ("WOMG_S" %in% method) {
+        stat[v, "WOMG_S"] <- compute_WOMG(s, p)
       }
       if ("GBT_S" %in% method) {
         stat[v, "GBT_S"] <- compute_GBT(s, p)
       }
       if ("M4_S" %in% method) {
         if ("b" %in% colnames(psi)) {
-          s_1 <- sum((x[pair[v, 1], ] == 1) & (x[pair[v, 2], ] == 1))
+          s_1 <- as.integer((x[pair[v, 1], ] == 1) & (x[pair[v, 2], ] == 1))
           p_1 <- p_mat[pair[v, 1], , 2] * p_mat[pair[v, 2], , 2]
         } else {
-          s_1 <- sum((x[pair[v, 1], ] == (m - 1)) &
-                       (x[pair[v, 2], ] == (m - 1)))
+          s_1 <- as.integer((x[pair[v, 1], ] == (m - 1)) &
+                              (x[pair[v, 2], ] == (m - 1)))
           p_1 <- rep(NA, times = n)
           for (i in 1:n) {
             p_1[i] <- p_mat[pair[v, 1], i, m[i]] * p_mat[pair[v, 2], i, m[i]]
@@ -287,33 +297,36 @@ detect_as <- function(method,
         }
         s_0 <- s - s_1
         p_0 <- p - p_1
-        stat[v, "M4_S"] <- compute_M4(c(s_1, s_0), cbind(p_1, p_0, 1 - p))
+        stat[v, "M4_S"] <- compute_M4(cbind(s_1, s_0), cbind(p_1, p_0, 1 - p))
       }
     }
   }
 
   # Compute response-based statistics
-  if (any(c("OMG_R", "GBT_R", "M4_R") %in% method)) {
+  if (any(c("OMG_R", "WOMG_R", "GBT_R", "M4_R") %in% method)) {
     m <- count(psi)
     p_mat <- irt_p(m, psi, xi)
     for (v in 1:NN) {
-      s <- sum(r[pair[v, 1], ] == r[pair[v, 2], ])
+      s <- as.integer(r[pair[v, 1], ] == r[pair[v, 2], ])
       p <- rowSums(p_mat[pair[v, 1], , ] * p_mat[pair[v, 2], , ], na.rm = TRUE)
       if ("OMG_R" %in% method) {
         stat[v, "OMG_R"] <- compute_OMG(s, p)
+      }
+      if ("WOMG_R" %in% method) {
+        stat[v, "WOMG_R"] <- compute_WOMG(s, p)
       }
       if ("GBT_R" %in% method) {
         stat[v, "GBT_R"] <- compute_GBT(s, p)
       }
       if ("M4_R" %in% method) {
-        s_1 <- sum((r[pair[v, 1], ] == m) & (r[pair[v, 2], ] == m))
+        s_1 <- as.integer((r[pair[v, 1], ] == m) & (r[pair[v, 2], ] == m))
         p_1 <- rep(NA, times = n)
         for (i in 1:n) {
           p_1[i] <- p_mat[pair[v, 1], i, m[i]] * p_mat[pair[v, 2], i, m[i]]
         }
         s_0 <- s - s_1
         p_0 <- p - p_1
-        stat[v, "M4_R"] <- compute_M4(c(s_1, s_0), cbind(p_1, p_0, 1 - p))
+        stat[v, "M4_R"] <- compute_M4(cbind(s_1, s_0), cbind(p_1, p_0, 1 - p))
       }
     }
   }
@@ -324,9 +337,9 @@ detect_as <- function(method,
     p_mat <- irt_p(m, psi, xi, ignore = "lambda1")
     mu <- t(outer(psi[, "beta"], xi[, "tau"], "-"))
     for (v in 1:NN) {
-      s <- sum((x[pair[v, 1], ] == x[pair[v, 2], ]) &
-                 (y[pair[v, 1], ] < mu[pair[v, 1], ]) &
-                 (y[pair[v, 2], ] < mu[pair[v, 2], ]))
+      s <- as.integer((x[pair[v, 1], ] == x[pair[v, 2], ]) &
+                        (y[pair[v, 1], ] < mu[pair[v, 1], ]) &
+                        (y[pair[v, 2], ] < mu[pair[v, 2], ]))
       p <- 0.25 *
         rowSums(p_mat[pair[v, 1], , ] * p_mat[pair[v, 2], , ], na.rm = TRUE)
       if ("OMG_ST" %in% method) {
@@ -344,9 +357,9 @@ detect_as <- function(method,
     p_mat <- irt_p(m, psi, xi)
     mu <- t(outer(psi[, "beta"], xi[, "tau"], "-"))
     for (v in 1:NN) {
-      s <- sum((r[pair[v, 1], ] == r[pair[v, 2], ]) &
-                 (y[pair[v, 1], ] < mu[pair[v, 1], ]) &
-                 (y[pair[v, 2], ] < mu[pair[v, 2], ]))
+      s <- as.integer((r[pair[v, 1], ] == r[pair[v, 2], ]) &
+                        (y[pair[v, 1], ] < mu[pair[v, 1], ]) &
+                        (y[pair[v, 2], ] < mu[pair[v, 2], ]))
       p <- 0.25 *
         rowSums(p_mat[pair[v, 1], , ] * p_mat[pair[v, 2], , ], na.rm = TRUE)
       if ("OMG_RT" %in% method) {
@@ -361,6 +374,8 @@ detect_as <- function(method,
   # Compute p-values
   pval[, grep("OMG", colnames(pval))] <-
     pnorm(stat[, grep("OMG", colnames(stat))], lower.tail = FALSE)
+  pval[, grep("WOMG", colnames(pval))] <-
+    pnorm(stat[, grep("WOMG", colnames(stat))], lower.tail = FALSE)
   pval[, grep("GBT", colnames(pval))] <-
     stat[, grep("GBT", colnames(stat))]
   pval[, grep("M4", colnames(pval))] <-

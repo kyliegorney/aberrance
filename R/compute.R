@@ -3,7 +3,7 @@
 #' @noRd
 
 compute_EDI_CO <- function(s, p, c) {
-  (sum(s - rowSums(p, na.rm = TRUE)) + c) /
+  (sum(rowSums(s - p, na.rm = TRUE)) + c) /
     sqrt(sum(rowSums(p * (1 - p), na.rm = TRUE)))
 }
 
@@ -12,7 +12,7 @@ compute_EDI_CO <- function(s, p, c) {
 #' @noRd
 
 compute_EDI_TS <- function(s, p, p1, info) {
-  sum(s - rowSums(p, na.rm = TRUE)) /
+  sum(rowSums(s - p, na.rm = TRUE)) /
     sqrt(sum(rowSums(p * (1 - p), na.rm = TRUE)) +
            sum(rowSums(p1, na.rm = TRUE)^2 / info))
 }
@@ -30,7 +30,7 @@ compute_GBT <- function(s, p) {
       f[1:(i+1)] <- c(f[1:i] * (1 - p[i]), 0) + c(0, f[1:i] * p[i])
     }
   }
-  sum(f[(s+1):(n+1)])
+  sum(f[(sum(s)+1):(n+1)])
 }
 
 #' Compute the signed likelihood ratio test statistic
@@ -71,7 +71,7 @@ compute_M4 <- function(s, p) {
   for (i in 1:(n+1)) {
     F[, i] <- rev(cumsum(rev(rowSums(cbind(f[, i:(n+1)])))))
   }
-  sum(f[F <= F[s[1]+1, s[2]+1]])
+  sum(f[F <= F[sum(s[, 1])+1, sum(s[, 2])+1]])
 }
 
 #' Compute the omega statistic
@@ -79,7 +79,7 @@ compute_M4 <- function(s, p) {
 #' @noRd
 
 compute_OMG <- function(s, p, c = 0) {
-  (s - sum(p) + c) / sqrt(sum(p * (1 - p)))
+  (sum(s - p) + c) / sqrt(sum(p * (1 - p)))
 }
 
 #' Compute skewness corrections for standardized person-fit statistics
@@ -337,4 +337,13 @@ compute_SPF_ST <- function(mdc, x, y, p, p1, m, s) {
     }
   }
   stat
+}
+
+#' Compute the weighted omega statistic
+#'
+#' @noRd
+
+compute_WOMG <- function(s, p) {
+  w <- -log(p)
+  sum((s - p) * w) / sqrt(sum(p * (1 - p) * w^2))
 }

@@ -1,5 +1,7 @@
 # aberrance (development version)
 
+* Add unconditional weighted omega statistic to `detect_as()`.
+
 * Delete distractor-based statistics from `detect_ac()` and `detect_as()`.
 
 # aberrance 0.1.1

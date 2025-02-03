@@ -21,6 +21,8 @@ score-based statistics are:
 \itemize{
 \item \code{"OMG_S"} for the unconditional \eqn{\omega} statistic (Romero et al.,
 2015).
+\item \code{"WOMG_S"} for the unconditional weighted \eqn{\omega} statistic (Trout &
+Gorney, 2025).
 \item \code{"GBT_S"} for the unconditional \eqn{GBT} statistic (van der Linden &
 Sotaridona, 2006).
 \item \code{"M4_S"} for the \eqn{M4} statistic (Maynes, 2014).
@@ -30,6 +32,8 @@ Options for response-based statistics are:
 \itemize{
 \item \code{"OMG_R"} for the unconditional \eqn{\omega} statistic (Romero et al.,
 2015).
+\item \code{"WOMG_R"} for the unconditional weighted \eqn{\omega} statistic (Trout &
+Gorney, 2025).
 \item \code{"GBT_R"} for the unconditional \eqn{GBT} statistic (van der Linden &
 Sotaridona, 2006).
 \item \code{"M4_R"} for the \eqn{M4} statistic (Maynes, 2014).
@@ -130,7 +134,7 @@ y[cv, ci] <- y[cv, ci] * 0.75
 
 # Detect answer similarity
 out <- detect_as(
-  method = c("OMG_S", "GBT_S", "OMG_ST", "GBT_ST"),
+  method = c("OMG_S", "WOMG_S", "GBT_S", "OMG_ST", "GBT_ST"),
   psi = psi,
   x = x,
   y = y
@@ -158,7 +162,7 @@ x[cv, ci] <- 3
 
 # Detect answer similarity
 out <- detect_as(
-  method = c("OMG_S", "GBT_S"),
+  method = c("OMG_S", "WOMG_S", "GBT_S"),
   psi = psi,
   x = x
 )
@@ -210,7 +214,7 @@ for (v in 1:length(c)) {
 
 # Detect answer similarity
 out <- detect_as(
-  method = c("OMG_R", "GBT_R"),
+  method = c("OMG_R", "WOMG_R", "GBT_R"),
   psi = psi,
   r = r
 )
@@ -227,6 +231,9 @@ detection and methodology} (pp. 53--80). Routledge.
 Romero, M., Riascos, Á., & Jara, D. (2015). On the optimality of
 answer-copying indices: Theory and practice. \emph{Journal of Educational and
 Behavioral Statistics}, \emph{40}(5), 435--453.
+
+Trout, N., & Gorney, K. (2025). \emph{Weighted answer similarity analysis}
+[Manuscript submitted for publication].
 
 van der Linden, W. J., & Sotaridona, L. (2006). Detecting answer copying when
 the regular response process follows a known response model. \emph{Journal of

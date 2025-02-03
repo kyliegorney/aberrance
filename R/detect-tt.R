@@ -332,7 +332,7 @@ detect_tt <- function(method,
     if (any(c("EDI_SD_NO", "EDI_SD_CO", "GBT_SD") %in% method)) {
       for (v in which(rowSums(is.na(x_s)) > 0)) {
         ci <- which(is.na(x_s[v, ]))
-        s <- sum(x[v, ci])
+        s <- x[v, ci]
         p <- p_s[v, ci, 2]
         if ("EDI_SD_NO" %in% method) {
           stat[v, "EDI_SD_NO"] <- compute_OMG(s, p, c = 0)
@@ -362,7 +362,7 @@ detect_tt <- function(method,
     if (any(c("EDI_R_NO", "EDI_R_CO", "GBT_R") %in% method)) {
       for (v in which(rowSums(is.na(r_s)) > 0)) {
         ci <- which(is.na(r_s[v, ]))
-        s <- sum(r[v, ci] == m[ci])
+        s <- as.integer(r[v, ci] == m[ci])
         p <- rep(NA, times = length(ci))
         for (i in 1:length(ci)) {
           p[i] <- p_s[v, ci[i], m[ci[i]]]
@@ -402,8 +402,8 @@ detect_tt <- function(method,
       }
       for (v in 1:N) {
         g <- which(group == names(table(group))[v])
-        s <- rowSums(ifelse(is.na(x_s[g, ]), x[g, ], NA), na.rm = TRUE)
-        if (sum(s) > 0) {
+        s <- ifelse(is.na(x_s[g, ]), x[g, ], NA)
+        if (sum(s, na.rm = TRUE) > 0) {
           p <- ifelse(is.na(x_s[g, ]), p_s[g, , 2], NA)
           if ("EDI_SD_NO" %in% method) {
             stat[v, "EDI_SD_NO"] <- compute_EDI_CO(s, p, c = 0)
@@ -429,9 +429,8 @@ detect_tt <- function(method,
       }
       for (v in 1:N) {
         g <- which(group == names(table(group))[v])
-        s <- rowSums(
-          ifelse(is.na(r_s[g, ]), t(t(r[g, ]) == m), NA), na.rm = TRUE)
-        if (sum(s) > 0) {
+        s <- ifelse(is.na(r_s[g, ]), t(t(r[g, ]) == m), NA)
+        if (sum(s, na.rm = TRUE) > 0) {
           p <- matrix(nrow = length(g), ncol = n)
           for (i in 1:n) {
             p[, i] <- ifelse(is.na(r_s[g, i]), p_s[g, i, m[i]], NA)
