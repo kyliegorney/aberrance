@@ -87,7 +87,7 @@
 #'
 #' Gorney, K. (2024). Three new corrections for standardized person-fit
 #' statistics for tests with polytomous items. *British Journal of Mathematical
-#' and Statistical Psychology*. Advance online publication.
+#' and Statistical Psychology*, *77*(3), 634--650.
 #'
 #' Gorney, K., Sinharay, S., & Eckerly, C. (2024). Efficient corrections for
 #' standardized person-fit statistics. *Psychometrika*, *89*(2), 569--591.

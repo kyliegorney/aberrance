@@ -232,8 +232,8 @@ Romero, M., Riascos, Á., & Jara, D. (2015). On the optimality of
 answer-copying indices: Theory and practice. \emph{Journal of Educational and
 Behavioral Statistics}, \emph{40}(5), 435--453.
 
-Trout, N., & Gorney, K. (2025). \emph{Weighted answer similarity analysis}
-[Manuscript submitted for publication].
+Trout, N., & Gorney, K. (2025). Weighted answer similarity analysis. \emph{Applied
+Psychological Measurement}. Advance online publication.
 
 van der Linden, W. J., & Sotaridona, L. (2006). Detecting answer copying when
 the regular response process follows a known response model. \emph{Journal of

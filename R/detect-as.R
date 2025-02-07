@@ -58,8 +58,8 @@
 #' answer-copying indices: Theory and practice. *Journal of Educational and
 #' Behavioral Statistics*, *40*(5), 435--453.
 #' 
-#' Trout, N., & Gorney, K. (2025). *Weighted answer similarity analysis*
-#' \[Manuscript submitted for publication].
+#' Trout, N., & Gorney, K. (2025). Weighted answer similarity analysis. *Applied
+#' Psychological Measurement*. Advance online publication.
 #'
 #' van der Linden, W. J., & Sotaridona, L. (2006). Detecting answer copying when
 #' the regular response process follows a known response model. *Journal of
