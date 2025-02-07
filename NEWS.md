@@ -1,3 +1,5 @@
+# aberrance (development version)
+
 # aberrance 0.2.0
 
 * Add unconditional weighted omega statistic to `detect_as()`.
