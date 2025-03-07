@@ -1,6 +1,6 @@
 Package: aberrance
 Title: Detect Aberrant Behavior in Test Data
-Version: 0.2.1
+Version: 0.2.1.9000
 Authors@R: c(
     person(
       "Kylie", "Gorney",
