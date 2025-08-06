@@ -5,12 +5,12 @@ Authors@R: c(
     person(
       "Kylie", "Gorney",
       email = "kgorney@msu.edu",
-      role = c("aut", "cph", "cre"),
+      role = c("aut", "cre"),
       comment = c(ORCID = "0000-0002-8924-0726")
     ),
     person(
       "Jiayi", "Deng",
-      role = c("aut", "cph"),
+      role = c("aut"),
       comment = c(ORCID = "0000-0002-1962-2956")
     )
   )
