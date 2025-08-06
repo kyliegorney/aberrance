@@ -23,19 +23,19 @@
 #'
 #'   Options for score and response time-based statistics are:
 #'   - `"OMG_ST"` for the unconditional \eqn{\omega} statistic (Gorney &
-#'     Wollack, 2024).
+#'     Wollack, 2025).
 #'   - `"GBT_ST"` for the unconditional \eqn{GBT} statistic (Gorney & Wollack,
-#'     2024).
+#'     2025).
 #'
 #'   Options for response and response time-based statistics are:
 #'   - `"OMG_RT"` for the unconditional \eqn{\omega} statistic (Gorney &
-#'     Wollack, 2024).
+#'     Wollack, 2025).
 #'   - `"GBT_RT"` for the unconditional \eqn{GBT} statistic (Gorney & Wollack,
-#'     2024).
+#'     2025).
 #'
 #' @param x,r,y Matrices of raw data. `x` is for the item scores, `r` the item
 #'   responses, and `y` the item log response times.
-#'   
+#'
 #' @inheritParams detect_pm
 #'
 #' @returns A list is returned with the following elements:
@@ -46,9 +46,9 @@
 #'   significance levels.}
 #'
 #' @references
-#' Gorney, K., & Wollack, J. A. (2024). Using response times in answer
-#' similarity analysis. *Journal of Educational and Behavioral Statistics*.
-#' Advance online publication.
+#' Gorney, K., & Wollack, J. A. (2025). Using response times in answer
+#' similarity analysis. *Journal of Educational and Behavioral Statistics*,
+#' *50*(3), 449--470.
 #'
 #' Maynes, D. (2014). Detection of non-independent test taking by similarity
 #' analysis. In N. M. Kingston & A. K. Clark (Eds.), *Test fraud: Statistical

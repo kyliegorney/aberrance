@@ -42,17 +42,17 @@ Sotaridona, 2006).
 Options for score and response time-based statistics are:
 \itemize{
 \item \code{"OMG_ST"} for the unconditional \eqn{\omega} statistic (Gorney &
-Wollack, 2024).
+Wollack, 2025).
 \item \code{"GBT_ST"} for the unconditional \eqn{GBT} statistic (Gorney & Wollack,
-2024).
+2025).
 }
 
 Options for response and response time-based statistics are:
 \itemize{
 \item \code{"OMG_RT"} for the unconditional \eqn{\omega} statistic (Gorney &
-Wollack, 2024).
+Wollack, 2025).
 \item \code{"GBT_RT"} for the unconditional \eqn{GBT} statistic (Gorney & Wollack,
-2024).
+2025).
 }}
 
 \item{psi}{A matrix of item parameters.}
@@ -220,9 +220,9 @@ out <- detect_as(
 )
 }
 \references{
-Gorney, K., & Wollack, J. A. (2024). Using response times in answer
-similarity analysis. \emph{Journal of Educational and Behavioral Statistics}.
-Advance online publication.
+Gorney, K., & Wollack, J. A. (2025). Using response times in answer
+similarity analysis. \emph{Journal of Educational and Behavioral Statistics},
+\emph{50}(3), 449--470.
 
 Maynes, D. (2014). Detection of non-independent test taking by similarity
 analysis. In N. M. Kingston & A. K. Clark (Eds.), \emph{Test fraud: Statistical
