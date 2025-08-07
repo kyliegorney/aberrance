@@ -2,6 +2,8 @@
 
 * Delete distractor-based statistics from `detect_pm()`.
 
+* Fix handling of missing data in `detect_as()`.
+
 # aberrance 0.2.1
 
 * Convert `compute_GBT()` and `compute_M4()` to C++.
