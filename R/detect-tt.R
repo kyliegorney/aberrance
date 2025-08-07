@@ -208,7 +208,7 @@ detect_tt <- function(method,
          "or response-based statistics, but not both.", call. = FALSE)
   }
   if (any("SD" %in% extract(method, 2))) {
-    check_par(c("x", "d"), psi)
+    check_par("x", psi)
     if (is.null(group)) {
       if ("EDI_SD_TS" %in% method) {
         method <- setdiff(method, "EDI_SD_TS")
