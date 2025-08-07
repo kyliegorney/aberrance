@@ -2,22 +2,15 @@
 #'
 #' @noRd
 
-est <- function(interval, psi, x = NULL, d = NULL, r = NULL, y = NULL) {
-  N <- max(nrow(x), nrow(d), nrow(r), nrow(y))
-  xi_names <- c("theta", "eta", "eta", "tau")[
-    c(!is.null(x), !is.null(d), !is.null(r), !is.null(y))]
+est <- function(interval, psi, x = NULL, r = NULL, y = NULL) {
+  N <- max(nrow(x), nrow(r), nrow(y))
+  xi_names <- c("theta", "eta", "tau")[c(!is.null(x), !is.null(r), !is.null(y))]
   xi <- matrix(nrow = N, ncol = length(xi_names),
                dimnames = list(NULL, xi_names))
   if (!is.null(x)) {
     m <- count(psi, ignore = "lambda1")
     xi[, "theta"] <- sapply(1:N, function(v)
       optimize(est_theta, interval, psi = psi, x = x[v, ], m = m,
-               maximum = TRUE)$maximum)
-  }
-  if (!is.null(d)) {
-    m <- count(psi, ignore = "b")
-    xi[, "eta"] <- sapply(1:N, function(v)
-      optimize(est_eta, interval, psi = psi, r = d[v, ], m = m,
                maximum = TRUE)$maximum)
   }
   if (!is.null(r)) {

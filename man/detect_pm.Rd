@@ -9,7 +9,6 @@ detect_pm(
   psi,
   xi = NULL,
   x = NULL,
-  d = NULL,
   r = NULL,
   y = NULL,
   interval = c(-4, 4),
@@ -26,17 +25,6 @@ known as \eqn{\zeta_1} (Tatsuoka, 1984; see also Sinharay, 2018b).
 known as \eqn{\zeta_2} (Tatsuoka, 1984; see also Sinharay, 2018b).
 \item \code{"L_S_*"} for the standardized log-likelihood statistic (Drasgow et al.,
 1985).
-}
-
-Options for distractor-based statistics are:
-\itemize{
-\item \code{"L_D_*"} for the standardized log-likelihood statistic (Gorney &
-Wollack, 2023).
-}
-
-Options for score and distractor-based statistics are:
-\itemize{
-\item \code{"L_SD_*"} for the log-likelihood statistic (Gorney & Wollack, 2023).
 }
 
 Options for response-based statistics are:
@@ -91,8 +79,8 @@ Sinharay, & Eckerly, 2024; see also Gorney, 2024).
 \item{xi}{A matrix of person parameters. If \code{NULL} (default), person
 parameters are estimated using maximum likelihood estimation.}
 
-\item{x, d, r, y}{Matrices of raw data. \code{x} is for the item scores, \code{d} the item
-distractors, \code{r} the item responses, and \code{y} the item log response times.}
+\item{x, r, y}{Matrices of raw data. \code{x} is for the item scores, \code{r} the item
+responses, and \code{y} the item log response times.}
 
 \item{interval}{The interval to search for the person parameters. Default is
 \code{c(-4, 4)}.}
@@ -215,9 +203,6 @@ standardized person-fit statistics. \emph{Psychometrika}, \emph{89}(2), 569--591
 Gorney, K., Sinharay, S., & Liu, X. (2024). Using item scores and response
 times in person-fit assessment. \emph{British Journal of Mathematical and
 Statistical Psychology}, \emph{77}(1), 151--168.
-
-Gorney, K., & Wollack, J. A. (2023). Using item scores and distractors in
-person-fit assessment. \emph{Journal of Educational Measurement}, \emph{60}(1), 3--27.
 
 Molenaar, I. W., & Hoijtink, H. (1990). The many null distributions of person
 fit indices. \emph{Psychometrika}, \emph{55}(1), 75--106.

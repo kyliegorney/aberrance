@@ -33,9 +33,6 @@
 #'   - `"GBT_RT"` for the unconditional \eqn{GBT} statistic (Gorney & Wollack,
 #'     2025).
 #'
-#' @param x,r,y Matrices of raw data. `x` is for the item scores, `r` the item
-#'   responses, and `y` the item log response times.
-#'
 #' @inheritParams detect_pm
 #'
 #' @returns A list is returned with the following elements:

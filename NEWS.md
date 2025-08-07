@@ -1,5 +1,7 @@
 # aberrance (development version)
 
+* Delete distractor-based statistics from `detect_pm()`.
+
 # aberrance 0.2.1
 
 * Convert `compute_GBT()` and `compute_M4()` to C++.

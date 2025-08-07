@@ -11,13 +11,6 @@
 #'   - `"L_S_*"` for the standardized log-likelihood statistic (Drasgow et al.,
 #'      1985).
 #'
-#'   Options for distractor-based statistics are:
-#'   - `"L_D_*"` for the standardized log-likelihood statistic (Gorney &
-#'     Wollack, 2023).
-#'
-#'   Options for score and distractor-based statistics are:
-#'   - `"L_SD_*"` for the log-likelihood statistic (Gorney & Wollack, 2023).
-#'
 #'   Options for response-based statistics are:
 #'   - `"L_R_*"` for the standardized log-likelihood statistic (Drasgow et al.,
 #'      1985).
@@ -60,8 +53,8 @@
 #' @param xi A matrix of person parameters. If `NULL` (default), person
 #'   parameters are estimated using maximum likelihood estimation.
 #'
-#' @param x,d,r,y Matrices of raw data. `x` is for the item scores, `d` the item
-#'    distractors, `r` the item responses, and `y` the item log response times.
+#' @param x,r,y Matrices of raw data. `x` is for the item scores, `r` the item
+#'   responses, and `y` the item log response times.
 #'
 #' @param interval The interval to search for the person parameters. Default is
 #'   `c(-4, 4)`.
@@ -95,9 +88,6 @@
 #' Gorney, K., Sinharay, S., & Liu, X. (2024). Using item scores and response
 #' times in person-fit assessment. *British Journal of Mathematical and
 #' Statistical Psychology*, *77*(1), 151--168.
-#'
-#' Gorney, K., & Wollack, J. A. (2023). Using item scores and distractors in
-#' person-fit assessment. *Journal of Educational Measurement*, *60*(1), 3--27.
 #'
 #' Molenaar, I. W., & Hoijtink, H. (1990). The many null distributions of person
 #' fit indices. *Psychometrika*, *55*(1), 75--106.
@@ -213,7 +203,7 @@
 detect_pm <- function(method,
                       psi,
                       xi = NULL,
-                      x = NULL, d = NULL, r = NULL, y = NULL,
+                      x = NULL, r = NULL, y = NULL,
                       interval = c(-4, 4),
                       alpha = 0.05) {
 
@@ -241,16 +231,13 @@ detect_pm <- function(method,
     }
     method <- tmp
   }
-  if (any(c("S", "D", "SD", "ST") %in% extract(method, 2)) &&
+  if (any(c("S", "ST") %in% extract(method, 2)) &&
       any(c("R", "RT") %in% extract(method, 2))) {
-    stop("`method` may contain either score and distractor-based statistics ",
-         "or response-based statistics, but not both.", call. = FALSE)
+    stop("`method` may contain either score-based statistics or ",
+         "response-based statistics, but not both.", call. = FALSE)
   }
-  if (any(c("S", "SD", "ST") %in% extract(method, 2))) {
+  if (any(c("S", "ST") %in% extract(method, 2))) {
     check_par("x", psi, xi)
-  }
-  if (any(c("D", "SD") %in% extract(method, 2))) {
-    check_par("d", psi, xi)
   }
   if (any(c("R", "RT") %in% extract(method, 2))) {
     check_par("r", psi, xi)
@@ -272,7 +259,7 @@ detect_pm <- function(method,
     arg = unique(method),
     choices = c(
       t(outer(
-        c("ECI2_S", "ECI4_S", "L_S", "L_D", "L_SD", "L_R", "Q_ST", "Q_RT"),
+        c("ECI2_S", "ECI4_S", "L_S", "L_R", "Q_ST", "Q_RT"),
         c("NO", "CF", "CS", "EW", "TS", "TSCF", "TSCS", "TSEW"),
         paste, sep = "_"
       )),
@@ -285,11 +272,11 @@ detect_pm <- function(method,
     ),
     several.ok = TRUE
   )
-  check_data(x, d, r, y)
+  check_data(x, r, y)
 
   # Setup
-  N <- max(nrow(x), nrow(d), nrow(r), nrow(y))
-  n <- max(ncol(x), ncol(d), ncol(r), ncol(y))
+  N <- max(nrow(x), nrow(r), nrow(y))
+  n <- max(ncol(x), ncol(r), ncol(y))
   stat <- pval <- matrix(
     nrow = N, ncol = length(mdc),
     dimnames = list(
@@ -310,11 +297,11 @@ detect_pm <- function(method,
 
   # Estimate person parameters
   if (is.null(xi)) {
-    xi <- est(interval, psi, x = x, d = d, r = r, y = y)
+    xi <- est(interval, psi, x = x, r = r, y = y)
   }
 
   # Compute score-based statistics
-  if (any(c("ECI2_S", "ECI4_S", "L_S", "L_SD", "Q_ST") %in% md)) {
+  if (any(c("ECI2_S", "ECI4_S", "L_S", "Q_ST") %in% md)) {
     m <- count(psi, ignore = "lambda1")
     p <- irt_p(m, psi, xi, ignore = "lambda1")
     p1 <- irt_p1(p, m, psi, xi, ignore = "lambda1")
@@ -322,51 +309,21 @@ detect_pm <- function(method,
       tmp <- mdc[md %in% c("ECI2_S", "ECI4_S")]
       stat[, tmp] <- compute_SPF_S(tmp, x, p, p1)
     }
-    if (any(c("L_S", "L_SD", "Q_ST") %in% md)) {
+    if (any(c("L_S", "Q_ST") %in% md)) {
       tmp <- unique(c(
         mdc[md == "L_S"],
-        paste("L_S", c[md %in% c("L_SD", "Q_ST")], sep = "_")
+        paste("L_S", c[md == "Q_ST"], sep = "_")
       ))
       spf <- compute_SPF_S(tmp, x, p, p1)
       if ("L_S" %in% md) {
         tmp <- mdc[md == "L_S"]
         stat[, tmp] <- spf[, tmp]
       }
-      if ("L_SD" %in% md) {
-        tmp <- paste("L_S", c[md == "L_SD"], sep = "_")
-        L_S_in_L_SD <- spf[, tmp]
-      }
       if ("Q_ST" %in% md) {
         tmp <- paste("L_S", c[md == "Q_ST"], sep = "_")
         L_S_in_Q_ST <- spf[, tmp]
       }
     }
-  }
-
-  # Compute distractor-based statistics
-  if (any(c("L_D", "L_SD") %in% md)) {
-    m <- count(psi, ignore = "b")
-    p <- irt_p(m, psi, xi, ignore = "b")
-    p1 <- irt_p1(p, m, psi, xi, ignore = "b")
-    tmp <- unique(c(
-      mdc[md == "L_D"],
-      paste("L_D", c[md == "L_SD"], sep = "_")
-    ))
-    spf <- compute_SPF_S(tmp, d - 1, p, p1)
-    if ("L_D" %in% md) {
-      tmp <- mdc[md == "L_D"]
-      stat[, tmp] <- spf[, tmp]
-    }
-    if ("L_SD" %in% md) {
-      tmp <- paste("L_D", c[md == "L_SD"], sep = "_")
-      L_D_in_L_SD <- spf[, tmp]
-    }
-  }
-
-  # Compute score and distractor-based statistics
-  if ("L_SD" %in% md) {
-    tmp <- mdc[md == "L_SD"]
-    stat[, tmp] <- pmin(L_S_in_L_SD, 0)^2 + pmin(L_D_in_L_SD, 0)^2
   }
 
   # Compute response-based statistics
@@ -439,13 +396,9 @@ detect_pm <- function(method,
   # Compute p-values
   pval[, md %in% c("ECI2_S", "ECI4_S")] <-
     pnorm(stat[, md %in% c("ECI2_S", "ECI4_S")], lower.tail = FALSE)
-  pval[, md %in% c("L_S", "L_D", "L_R", "L_ST", "L_RT")] <-
-    pnorm(stat[, md %in% c("L_S", "L_D", "L_R", "L_ST", "L_RT")],
+  pval[, md %in% c("L_S", "L_R", "L_ST", "L_RT")] <-
+    pnorm(stat[, md %in% c("L_S", "L_R", "L_ST", "L_RT")],
           lower.tail = TRUE)
-  pval[, md == "L_SD"] <-
-    0.25 * pchisq(stat[, md == "L_SD"], df = 2, lower.tail = FALSE) +
-    0.50 * pchisq(stat[, md == "L_SD"], df = 1, lower.tail = FALSE) +
-    0.25 * pchisq(stat[, md == "L_SD"], df = 0, lower.tail = FALSE)
   pval[, md == "L_T"] <-
     pchisq(stat[, md == "L_T"], df = n - 1, lower.tail = FALSE)
   pval[, md %in% c("Q_ST", "Q_RT")] <-
