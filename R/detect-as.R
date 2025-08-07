@@ -343,9 +343,11 @@ detect_as <- function(method,
     p_mat <- irt_p(m, psi, xi, ignore = "lambda1")
     mu <- t(outer(psi[, "beta"], xi[, "tau"], "-"))
     for (v in 1:NN) {
-      s <- as.integer((x[pair[v, 1], ] == x[pair[v, 2], ]) &
-                        (y[pair[v, 1], ] < mu[pair[v, 1], ]) &
-                        (y[pair[v, 2], ] < mu[pair[v, 2], ]))
+      s <- pmin(
+        x[pair[v, 1], ] == x[pair[v, 2], ],
+        y[pair[v, 1], ] < mu[pair[v, 1], ],
+        y[pair[v, 2], ] < mu[pair[v, 2], ]
+      )
       if (all(!is.na(s))) {
         p <- 0.25 *
           rowSums(p_mat[pair[v, 1], , ] * p_mat[pair[v, 2], , ], na.rm = TRUE)
@@ -365,9 +367,11 @@ detect_as <- function(method,
     p_mat <- irt_p(m, psi, xi)
     mu <- t(outer(psi[, "beta"], xi[, "tau"], "-"))
     for (v in 1:NN) {
-      s <- as.integer((r[pair[v, 1], ] == r[pair[v, 2], ]) &
-                        (y[pair[v, 1], ] < mu[pair[v, 1], ]) &
-                        (y[pair[v, 2], ] < mu[pair[v, 2], ]))
+      s <- pmin(
+        r[pair[v, 1], ] == r[pair[v, 2], ],
+        y[pair[v, 1], ] < mu[pair[v, 1], ],
+        y[pair[v, 2], ] < mu[pair[v, 2], ]
+      )
       if (all(!is.na(s))) {
         p <- 0.25 *
           rowSums(p_mat[pair[v, 1], , ] * p_mat[pair[v, 2], , ], na.rm = TRUE)
