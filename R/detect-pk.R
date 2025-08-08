@@ -201,7 +201,8 @@ detect_pk <- function(method,
   N <- max(nrow(x), nrow(y))
   n <- max(ncol(x), ncol(y))
   stat <- pval <- matrix(
-    nrow = N, ncol = length(method),
+    nrow = N,
+    ncol = length(method),
     dimnames = list(
       person = 1:N,
       method = method
@@ -244,10 +245,18 @@ detect_pk <- function(method,
     p1_0 <- irt_p1(p_0, m, psi, xi, ignore = "lambda1")
     if (any(c("L_S", "ML_S", "LR_S", "L_ST") %in% method)) {
       p_1 <- p_0
-      p_1[, ci, ] <- irt_p(m[ci], psi[ci, , drop = FALSE], xi_c,
-                           ignore = "lambda1")
-      p_1[, si, ] <- irt_p(m[si], psi[si, , drop = FALSE], xi_s,
-                           ignore = "lambda1")
+      p_1[, ci, ] <- irt_p(
+        m[ci],
+        psi[ci, , drop = FALSE],
+        xi_c,
+        ignore = "lambda1"
+      )
+      p_1[, si, ] <- irt_p(
+        m[si],
+        psi[si, , drop = FALSE],
+        xi_s,
+        ignore = "lambda1"
+      )
       L_S <- compute_L_S(
         x,
         p_0,
@@ -261,24 +270,38 @@ detect_pk <- function(method,
       }
       if (any(c("ML_S", "LR_S") %in% method)) {
         p1_1 <- p1_0
-        p1_1[, ci, ] <- irt_p1(p_1[, ci, , drop = FALSE], m[ci],
-                               psi[ci, , drop = FALSE], xi_c,
-                               ignore = "lambda1")
-        p1_1[, si, ] <- irt_p1(p_1[, si, , drop = FALSE], m[si],
-                               psi[si, , drop = FALSE], xi_s,
-                               ignore = "lambda1")
+        p1_1[, ci, ] <- irt_p1(
+          p_1[, ci, , drop = FALSE],
+          m[ci],
+          psi[ci, , drop = FALSE],
+          xi_c,
+          ignore = "lambda1"
+        )
+        p1_1[, si, ] <- irt_p1(
+          p_1[, si, , drop = FALSE],
+          m[si],
+          psi[si, , drop = FALSE],
+          xi_s,
+          ignore = "lambda1"
+        )
         num <- irt_info(p_1[, ci, , drop = FALSE], p1_1[, ci, , drop = FALSE]) *
           irt_info(p_1[, si, , drop = FALSE], p1_1[, si, , drop = FALSE])
         den <- irt_info(p_0[, ci, , drop = FALSE], p1_0[, ci, , drop = FALSE]) +
           irt_info(p_0[, si, , drop = FALSE], p1_0[, si, , drop = FALSE])
         q <- (xi_c[, "theta"] - xi_s[, "theta"]) * sqrt(num / den)
         if ("ML_S" %in% method) {
-          stat[, "ML_S"] <- ifelse(abs(L_S) < cutoff, L_S,
-                                   L_S + log(q / L_S) / L_S)
+          stat[, "ML_S"] <- ifelse(
+            abs(L_S) < cutoff,
+            L_S,
+            L_S + log(q / L_S) / L_S
+          )
         }
         if ("LR_S" %in% method) {
-          stat[, "LR_S"] <- ifelse(abs(L_S) < cutoff, pnorm(L_S),
-                                   pnorm(L_S) + (1 / L_S - 1 / q) * dnorm(L_S))
+          stat[, "LR_S"] <- ifelse(
+            abs(L_S) < cutoff,
+            pnorm(L_S),
+            pnorm(L_S) + (1 / L_S - 1 / q) * dnorm(L_S)
+          )
         }
       }
     }

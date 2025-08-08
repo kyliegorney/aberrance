@@ -278,7 +278,8 @@ detect_pm <- function(method,
   N <- max(nrow(x), nrow(r), nrow(y))
   n <- max(ncol(x), ncol(r), ncol(y))
   stat <- pval <- matrix(
-    nrow = N, ncol = length(mdc),
+    nrow = N,
+    ncol = length(mdc),
     dimnames = list(
       person = 1:N,
       method = mdc
@@ -397,8 +398,7 @@ detect_pm <- function(method,
   pval[, md %in% c("ECI2_S", "ECI4_S")] <-
     pnorm(stat[, md %in% c("ECI2_S", "ECI4_S")], lower.tail = FALSE)
   pval[, md %in% c("L_S", "L_R", "L_ST", "L_RT")] <-
-    pnorm(stat[, md %in% c("L_S", "L_R", "L_ST", "L_RT")],
-          lower.tail = TRUE)
+    pnorm(stat[, md %in% c("L_S", "L_R", "L_ST", "L_RT")], lower.tail = TRUE)
   pval[, md == "L_T"] <-
     pchisq(stat[, md == "L_T"], df = n - 1, lower.tail = FALSE)
   pval[, md %in% c("Q_ST", "Q_RT")] <-

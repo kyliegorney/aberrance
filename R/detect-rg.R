@@ -326,8 +326,10 @@ detect_rg <- function(method,
         }
         lines(u_i, p * conv, col = 2, lty = 2)
         segments(
-          x0 = min(u_i), y0 = chance[i] * conv,
-          x1 = max(u_i), y1 = chance[i] * conv,
+          x0 = min(u_i),
+          y0 = chance[i] * conv,
+          x1 = max(u_i),
+          y1 = chance[i] * conv,
           col = 2
         )
         plots[[i]] <- recordPlot()

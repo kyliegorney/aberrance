@@ -244,7 +244,8 @@ detect_as <- function(method,
   pair <- t(combn(N, 2))
   NN <- nrow(pair)
   stat <- pval <- matrix(
-    nrow = NN, ncol = length(method),
+    nrow = NN,
+    ncol = length(method),
     dimnames = list(
       pair = paste(pair[, 1], pair[, 2], sep = "-"),
       method = method

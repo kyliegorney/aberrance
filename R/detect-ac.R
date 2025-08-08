@@ -150,7 +150,8 @@ detect_ac <- function(method,
   NN <- nrow(pair)
   pair <- rbind(pair, pair[, 2:1])
   stat <- pval <- matrix(
-    nrow = NN * 2, ncol = length(method),
+    nrow = NN * 2,
+    ncol = length(method),
     dimnames = list(
       pair = paste(pair[, 1], pair[, 2], sep = "-"),
       method = method

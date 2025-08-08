@@ -202,7 +202,8 @@ detect_nm <- function(method, x = NULL, y = NULL) {
   N <- max(nrow(x), nrow(y))
   n <- max(ncol(x), ncol(y))
   stat <- matrix(
-    nrow = N, ncol = length(method),
+    nrow = N,
+    ncol = length(method),
     dimnames = list(
       person = 1:N,
       method = method
@@ -247,10 +248,10 @@ detect_nm <- function(method, x = NULL, y = NULL) {
           stat[incl, "U3_S"] <- U3_S
         }
         if ("ZU3_S" %in% method) {
-          A <- sum(p * w) + sum(p * (1 - p) * w) * (s[incl] - sum(p)) /
-            sum(p * (1 - p))
-          B <- sum(p * (1 - p) * w^2) - sum(p * (1 - p) * w)^2 /
-            sum(p * (1 - p))
+          A <- sum(p * w) +
+            sum(p * (1 - p) * w) * (s[incl] - sum(p)) / sum(p * (1 - p))
+          B <- sum(p * (1 - p) * w^2) -
+            sum(p * (1 - p) * w)^2 / sum(p * (1 - p))
           mu <- (W_max - A) / (W_max - W_min)
           sigma <- sqrt(B) / abs(W_max - W_min)
           stat[incl, "ZU3_S"] <- (U3_S - mu) / sigma
@@ -270,8 +271,8 @@ detect_nm <- function(method, x = NULL, y = NULL) {
           stat[incl, "E_S"] <- P / P_max
         }
         if ("C_S" %in% method) {
-          stat[incl, "C_S"] <-
-            (n * P_max - n * P) / (n * P_max - s[incl] * sum(p))
+          stat[incl, "C_S"] <- (n * P_max - n * P) /
+            (n * P_max - s[incl] * sum(p))
         }
         if ("MC_S" %in% method) {
           stat[incl, "MC_S"] <- (P_max - P) / (P_max - P_min)

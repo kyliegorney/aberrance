@@ -97,24 +97,38 @@ compute_SKEW <- function(method, correct, W, mu, sigma, gamma) {
     b <- sqrt(sigma^2 / (2 * nu))
     a <- b * nu
     if (method == "L") {
-      stat <- pchisq(abs(W - mu - a) / b,
-                     df = nu, lower.tail = FALSE, log.p = TRUE)
+      stat <- pchisq(
+        abs(W - mu - a) / b,
+        df = nu,
+        lower.tail = FALSE,
+        log.p = TRUE
+      )
       stat <- qnorm(stat, lower.tail = TRUE, log.p = TRUE)
     } else {
-      stat <- pchisq(abs(W - mu + a) / b,
-                     df = nu, lower.tail = FALSE, log.p = TRUE)
+      stat <- pchisq(
+        abs(W - mu + a) / b,
+        df = nu,
+        lower.tail = FALSE,
+        log.p = TRUE
+      )
       stat <- qnorm(stat, lower.tail = FALSE, log.p = TRUE)
     }
   } else {
     if (method == "L") {
       stat <- pnorm(no) - dnorm(no) * gamma * (no^2 - 1) / 6
-      stat <- ifelse(stat <= 0 | stat >= 1,
-                     pnorm(no, lower.tail = TRUE, log.p = TRUE), log(stat))
+      stat <- ifelse(
+        stat <= 0 | stat >= 1,
+        pnorm(no, lower.tail = TRUE, log.p = TRUE),
+        log(stat)
+      )
       stat <- qnorm(stat, lower.tail = TRUE, log.p = TRUE)
     } else {
       stat <- 1 - (pnorm(no) - dnorm(no) * gamma * (no^2 - 1) / 6)
-      stat <- ifelse(stat <= 0 | stat >= 1,
-                     pnorm(no, lower.tail = FALSE, log.p = TRUE), log(stat))
+      stat <- ifelse(
+        stat <= 0 | stat >= 1,
+        pnorm(no, lower.tail = FALSE, log.p = TRUE),
+        log(stat)
+      )
       stat <- qnorm(stat, lower.tail = FALSE, log.p = TRUE)
     }
   }

@@ -266,7 +266,8 @@ detect_tt <- function(method,
       several.ok = TRUE
     )
     stat <- pval <- matrix(
-      nrow = N, ncol = length(method),
+      nrow = N,
+      ncol = length(method),
       dimnames = list(
         person = 1:N,
         method = method
@@ -294,7 +295,8 @@ detect_tt <- function(method,
       several.ok = TRUE
     )
     stat <- pval <- matrix(
-      nrow = N, ncol = length(method),
+      nrow = N,
+      ncol = length(method),
       dimnames = list(
         group = names(table(group)),
         method = method
@@ -312,8 +314,11 @@ detect_tt <- function(method,
   n <- max(ncol(x), ncol(d), ncol(r))
   if ("SD" %in% extract(method, 2)) {
     m <- count(psi, ignore = "lambda1")
-    x_s <- ifelse(((x == 1) & (x_0 == 1)) |
-                    ((x == 0) & (x_0 == 0) & (d == d_0)), x, NA)
+    x_s <- ifelse(
+      ((x == 1) & (x_0 == 1)) | ((x == 0) & (x_0 == 0) & (d == d_0)),
+      x,
+      NA
+    )
     xi_s <- est(interval, psi, x = x_s)
     p_s <- irt_p(m, psi, xi_s, ignore = "lambda1")
   } else {
