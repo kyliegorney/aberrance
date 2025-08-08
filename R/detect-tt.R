@@ -351,7 +351,14 @@ detect_tt <- function(method,
       p_0 <- p_1 <- irt_p(m, psi, xi, ignore = "lambda1")
       p_1[, , 1] <- ifelse(is.na(x_s), p_c[, , 1], p_s[, , 1])
       p_1[, , 2] <- ifelse(is.na(x_s), p_c[, , 2], p_s[, , 2])
-      stat[, "L_SD"] <- compute_L(x, p_0, p_1, xi_c[, "theta"], xi_s[, "theta"])
+      stat[, "L_SD"] <- compute_L_S(
+        x,
+        p_0,
+        p_1,
+        xi_c[, "theta"],
+        xi_s[, "theta"],
+        signed = TRUE
+      )
       stat[which(rowSums(is.na(x_s)) == 0), "L_SD"] <- NA
     }
 
@@ -384,7 +391,14 @@ detect_tt <- function(method,
       for (j in 1:max(m)) {
         p_1[, , j] <- ifelse(is.na(r_s), p_c[, , j], p_s[, , j])
       }
-      stat[, "L_R"] <- compute_L(r - 1, p_0, p_1, xi_c[, "eta"], xi_s[, "eta"])
+      stat[, "L_R"] <- compute_L_S(
+        r - 1,
+        p_0,
+        p_1,
+        xi_c[, "eta"],
+        xi_s[, "eta"],
+        signed = TRUE
+      )
       stat[which(rowSums(is.na(r_s)) == 0), "L_R"] <- NA
     }
 

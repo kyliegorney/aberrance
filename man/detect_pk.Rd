@@ -32,13 +32,13 @@ For numerical stability, an absolute cutoff value can be specified using
 \code{cutoff}. \emph{Note:} This statistic cannot be computed under the 3PL model
 or the graded response model.
 \item \code{"S_S"} for the signed score test statistic (Sinharay, 2017).
-\item \code{"W_S"} for the Wald test statistic (Sinharay & Jensen, 2019).
+\item \code{"W_S"} for the signed Wald test statistic (Sinharay & Jensen, 2019).
 }
 
 Options for response time-based statistics are:
 \itemize{
-\item \code{"L_T"} for the signed likelihood ratio test statistic, or equivalently,
-\code{"W_T"} for the Wald test statistic (Sinharay, 2020).
+\item \code{"L_T"} for the signed likelihood ratio test statistic (Sinharay, 2020).
+\item \code{"W_T"} for the signed Wald test statistic (Sinharay, 2020).
 }
 
 Options for score and response time-based statistics are:

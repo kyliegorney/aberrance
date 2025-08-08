@@ -15,11 +15,11 @@
 #'     `cutoff`. *Note:* This statistic cannot be computed under the 3PL model
 #'     or the graded response model.
 #'   - `"S_S"` for the signed score test statistic (Sinharay, 2017).
-#'   - `"W_S"` for the Wald test statistic (Sinharay & Jensen, 2019).
+#'   - `"W_S"` for the signed Wald test statistic (Sinharay & Jensen, 2019).
 #'
 #'   Options for response time-based statistics are:
-#'   - `"L_T"` for the signed likelihood ratio test statistic, or equivalently,
-#'     `"W_T"` for the Wald test statistic (Sinharay, 2020).
+#'   - `"L_T"` for the signed likelihood ratio test statistic (Sinharay, 2020).
+#'   - `"W_T"` for the signed Wald test statistic (Sinharay, 2020).
 #'
 #'   Options for score and response time-based statistics are:
 #'   - `"L_ST"` for the constrained likelihood ratio test statistic (Sinharay &
@@ -248,7 +248,14 @@ detect_pk <- function(method,
                            ignore = "lambda1")
       p_1[, si, ] <- irt_p(m[si], psi[si, , drop = FALSE], xi_s,
                            ignore = "lambda1")
-      L_S <- compute_L(x, p_0, p_1, xi_c[, "theta"], xi_s[, "theta"])
+      L_S <- compute_L_S(
+        x,
+        p_0,
+        p_1,
+        xi_c[, "theta"],
+        xi_s[, "theta"],
+        signed = TRUE
+      )
       if ("L_S" %in% method) {
         stat[, "L_S"] <- L_S
       }
@@ -275,43 +282,55 @@ detect_pk <- function(method,
         }
       }
     }
-    if (any(c("S_S", "W_S") %in% method)) {
-      info_c <- irt_info(p_0[, ci, , drop = FALSE], p1_0[, ci, , drop = FALSE])
-      info_s <- irt_info(p_0[, si, , drop = FALSE], p1_0[, si, , drop = FALSE])
-      if ("S_S" %in% method) {
-        l1_c <- irt_l1(
-          x[, ci, drop = FALSE],
-          p_0[, ci, , drop = FALSE],
-          p1_0[, ci, , drop = FALSE]
-        )
-        l1_s <- irt_l1(
-          x[, si, drop = FALSE],
-          p_0[, si, , drop = FALSE],
-          p1_0[, si, , drop = FALSE]
-        )
-        S <- rowSums(l1_c)^2 / info_c + rowSums(l1_s)^2 / info_s
-        stat[, "S_S"] <- sign(xi_c[, "theta"] - xi_s[, "theta"]) * sqrt(S)
-      }
-      if ("W_S" %in% method) {
-        stat[, "W_S"] <- (xi_c[, "theta"] - xi_s[, "theta"]) /
-          sqrt(1 / info_c + 1 / info_s)
-      }
+    if ("S_S" %in% method) {
+      stat[, "S_S"] <- compute_S_S(
+        ci,
+        si,
+        x,
+        p_0,
+        p1_0,
+        xi_c[, "theta"],
+        xi_s[, "theta"],
+        signed = TRUE
+      )
+    }
+    if ("W_S" %in% method) {
+      stat[, "W_S"] <- compute_W_S(
+        ci,
+        si,
+        p_0,
+        p1_0,
+        xi_c[, "theta"],
+        xi_s[, "theta"],
+        signed = TRUE
+      )
     }
   }
 
   # Compute response time-based statistics
-  if (any(c("L_T", "W_T", "L_ST") %in% method)) {
-    Lambda_T <- xi_c[, "tau"]^2 * sum(psi[ci, "alpha"]^2) +
-      xi_s[, "tau"]^2 * sum(psi[si, "alpha"]^2) -
-      xi[, "tau"]^2 * sum(psi[, "alpha"]^2)
-    Lambda_T[Lambda_T < 0] <- 0
-    L_T <- sign(xi_c[, "tau"] - xi_s[, "tau"]) * sqrt(Lambda_T)
+  if (any(c("L_T", "L_ST") %in% method)) {
+    L_T <- compute_L_T(
+      ci,
+      si,
+      psi,
+      xi[, "tau"],
+      xi_c[, "tau"],
+      xi_s[, "tau"],
+      signed = TRUE
+    )
     if ("L_T" %in% method) {
       stat[, "L_T"] <- L_T
     }
-    if ("W_T" %in% method) {
-      stat[, "W_T"] <- L_T
-    }
+  }
+  if ("W_T" %in% method) {
+    stat[, "W_T"] <- compute_W_T(
+      ci,
+      si,
+      psi,
+      xi_c[, "tau"],
+      xi_s[, "tau"],
+      signed = TRUE
+    )
   }
 
   # Compute score and response time-based statistics
