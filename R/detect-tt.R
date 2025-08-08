@@ -314,8 +314,6 @@ detect_tt <- function(method,
     m <- count(psi, ignore = "lambda1")
     x_s <- ifelse(((x == 1) & (x_0 == 1)) |
                     ((x == 0) & (x_0 == 0) & (d == d_0)), x, NA)
-    d_s <- ifelse(((x == 1) & (x_0 == 1)) |
-                    ((x == 0) & (x_0 == 0) & (d == d_0)), d, NA)
     xi_s <- est(interval, psi, x = x_s)
     p_s <- irt_p(m, psi, xi_s, ignore = "lambda1")
   } else {
@@ -347,7 +345,6 @@ detect_tt <- function(method,
     }
     if ("L_SD" %in% method) {
       x_c <- ifelse(is.na(x_s), x, NA)
-      d_c <- ifelse(is.na(x_s), d, NA)
       xi_c <- est(interval, psi, x = x_c)
       p_c <- irt_p(m, psi, xi_c, ignore = "lambda1")
       xi <- est(interval, psi, x = x)
