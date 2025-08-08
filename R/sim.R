@@ -1,6 +1,7 @@
 #' Simulate data
 #'
-#' @description Simulate data using item response theory (IRT) models.
+#' @description Simulate data using item response theory (IRT) and response time
+#'   (RT) models.
 #'
 #' @param psi A matrix of item parameters.
 #'
