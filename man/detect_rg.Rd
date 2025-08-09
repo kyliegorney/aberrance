@@ -47,8 +47,8 @@ thresholds are returned for items for which the cumulative proportion
 correct is consistently above or below \code{chance}.
 }}
 
-\item{t, x}{Matrices of raw data. \code{t} is for the item response times and \code{x}
-the item scores.}
+\item{t, x}{Matrices of raw data. Rows correspond to persons and columns to
+items. \code{t} is for the item response times and \code{x} the item scores.}
 
 \item{outlier}{The percentile(s) above which to delete outliers in \code{t}.
 Length must be equal to 1 or equal to the total number of items. Default is

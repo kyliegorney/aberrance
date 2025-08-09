@@ -43,8 +43,8 @@ Options for response time-based statistics are:
 \item \code{"KL_T"} for the Kullback-Leibler divergence (Man et al., 2018).
 }}
 
-\item{x, y}{Matrices of raw data. \code{x} is for the item scores and \code{y} the item
-log response times.}
+\item{x, y}{Matrices of raw data. Rows correspond to persons and columns to
+items. \code{x} is for the item scores and \code{y} the item log response times.}
 }
 \value{
 A list is returned with the following elements:

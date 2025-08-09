@@ -28,13 +28,14 @@
 #' @param ci A vector of compromised item positions. All other items are
 #'   presumed secure.
 #'
-#' @param xi,xi_c,xi_s Matrices of person parameters. `xi` is based on all
-#'   items, `xi_c` is based on the compromised items, and `xi_s` is based on the
-#'   secure items. If `NULL` (default), person parameters are estimated using
-#'   maximum likelihood estimation.
+#' @param xi,xi_c,xi_s Matrices of person parameters. Rows correspond to persons
+#'   and columns to parameters. `xi` is based on all items, `xi_c` is based on
+#'   the compromised items, and `xi_s` is based on the secure items. If `NULL`
+#'   (default), person parameters are estimated using maximum likelihood
+#'   estimation.
 #'
-#' @param x,y Matrices of raw data. `x` is for the item scores and `y` the item
-#'   log response times.
+#' @param x,y Matrices of raw data. Rows correspond to persons and columns to
+#'   items. `x` is for the item scores and `y` the item log response times.
 #'
 #' @param cutoff Use with the modified signed likelihood ratio test statistic
 #'   and the Lugannani-Rice approximation. If the absolute value of the signed

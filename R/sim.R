@@ -3,9 +3,11 @@
 #' @description Simulate data using item response theory (IRT) and response time
 #'   (RT) models.
 #'
-#' @param psi A matrix of item parameters.
+#' @param psi A matrix of item parameters. Rows correspond to items and columns
+#'   to parameters.
 #'
-#' @param xi A matrix of person parameters.
+#' @param xi A matrix of person parameters. Rows correspond to persons and
+#'   columns to parameters.
 #'
 #' @details
 #'

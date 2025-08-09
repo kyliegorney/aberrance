@@ -30,16 +30,19 @@
 #'     using `c`.
 #'   - `"TS"` for the Taylor series expansion (Sinharay, 2018).
 #'
-#' @param xi,xi_c,xi_s Matrices of person parameters. `xi` is based on all
-#'   items, `xi_c` is based on items with changed answers, and `xi_s` is based
-#'   on items with the same answers. If `NULL` (default), person parameters are
-#'   estimated using maximum likelihood estimation.
+#' @param xi,xi_c,xi_s Matrices of person parameters. Rows correspond to persons
+#'   and columns to parameters. `xi` is based on all items, `xi_c` is based on
+#'   items with changed answers, and `xi_s` is based on items with the same
+#'   answers. If `NULL` (default), person parameters are estimated using maximum
+#'   likelihood estimation.
 #'
-#' @param x,d,r Matrices of final data. `x` is for the item scores, `d` the item
-#'   distractors, and `r` the item responses.
+#' @param x,d,r Matrices of final data. Rows correspond to persons and columns
+#'   to items. `x` is for the item scores, `d` the item distractors, and `r` the
+#'   item responses.
 #'
-#' @param x_0,d_0,r_0 Matrices of initial data. `x_0` is for the item scores,
-#'   `d_0` the item distractors, and `r_0` the item responses.
+#' @param x_0,d_0,r_0 Matrices of initial data. Rows correspond to persons and
+#'   columns to items. `x_0` is for the item scores, `d_0` the item distractors,
+#'   and `r_0` the item responses.
 #'
 #' @param group A vector indicating group membership. If `NULL` (default),
 #'   statistics are computed at the person level.

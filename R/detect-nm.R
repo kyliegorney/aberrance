@@ -34,8 +34,8 @@
 #'   Options for response time-based statistics are:
 #'   - `"KL_T"` for the Kullback-Leibler divergence (Man et al., 2018).
 #'
-#' @param x,y Matrices of raw data. `x` is for the item scores and `y` the item
-#'   log response times.
+#' @param x,y Matrices of raw data. Rows correspond to persons and columns to
+#'   items. `x` is for the item scores and `y` the item log response times.
 #'
 #' @returns A list is returned with the following elements:
 #' \item{stat}{A matrix of nonparametric person-fit statistics.}

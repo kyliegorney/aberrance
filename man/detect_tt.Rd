@@ -57,18 +57,22 @@ using \code{c}.
 \item \code{"TS"} for the Taylor series expansion (Sinharay, 2018).
 }}
 
-\item{psi}{A matrix of item parameters.}
+\item{psi}{A matrix of item parameters. Rows correspond to items and columns
+to parameters.}
 
-\item{xi, xi_c, xi_s}{Matrices of person parameters. \code{xi} is based on all
-items, \code{xi_c} is based on items with changed answers, and \code{xi_s} is based
-on items with the same answers. If \code{NULL} (default), person parameters are
-estimated using maximum likelihood estimation.}
+\item{xi, xi_c, xi_s}{Matrices of person parameters. Rows correspond to persons
+and columns to parameters. \code{xi} is based on all items, \code{xi_c} is based on
+items with changed answers, and \code{xi_s} is based on items with the same
+answers. If \code{NULL} (default), person parameters are estimated using maximum
+likelihood estimation.}
 
-\item{x, d, r}{Matrices of final data. \code{x} is for the item scores, \code{d} the item
-distractors, and \code{r} the item responses.}
+\item{x, d, r}{Matrices of final data. Rows correspond to persons and columns
+to items. \code{x} is for the item scores, \code{d} the item distractors, and \code{r} the
+item responses.}
 
-\item{x_0, d_0, r_0}{Matrices of initial data. \code{x_0} is for the item scores,
-\code{d_0} the item distractors, and \code{r_0} the item responses.}
+\item{x_0, d_0, r_0}{Matrices of initial data. Rows correspond to persons and
+columns to items. \code{x_0} is for the item scores, \code{d_0} the item distractors,
+and \code{r_0} the item responses.}
 
 \item{interval}{The interval to search for the person parameters. Default is
 \code{c(-4, 4)}.}

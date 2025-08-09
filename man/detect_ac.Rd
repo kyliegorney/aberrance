@@ -30,13 +30,15 @@ Options for response-based statistics are:
 Sotaridona, 2006).
 }}
 
-\item{psi}{A matrix of item parameters.}
+\item{psi}{A matrix of item parameters. Rows correspond to items and columns
+to parameters.}
 
-\item{xi}{A matrix of person parameters. If \code{NULL} (default), person
-parameters are estimated using maximum likelihood estimation.}
+\item{xi}{A matrix of person parameters. Rows correspond to persons and
+columns to parameters. If \code{NULL} (default), person parameters are estimated
+using maximum likelihood estimation.}
 
-\item{x, r}{Matrices of raw data. \code{x} is for the item scores and \code{r} the item
-responses.}
+\item{x, r}{Matrices of raw data. Rows correspond to persons and columns to
+items. \code{x} is for the item scores and \code{r} the item responses.}
 
 \item{interval}{The interval to search for the person parameters. Default is
 \code{c(-4, 4)}.}

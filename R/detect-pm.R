@@ -48,13 +48,16 @@
 #'   - `"TSEW"` for the Taylor series expansion and Edgeworth expansion (Gorney
 #'     Sinharay, & Eckerly, 2024; see also Gorney, 2024).
 #'
-#' @param psi A matrix of item parameters.
+#' @param psi A matrix of item parameters. Rows correspond to items and columns
+#'   to parameters.
 #'
-#' @param xi A matrix of person parameters. If `NULL` (default), person
-#'   parameters are estimated using maximum likelihood estimation.
+#' @param xi A matrix of person parameters. Rows correspond to persons and
+#'   columns to parameters. If `NULL` (default), person parameters are estimated
+#'   using maximum likelihood estimation.
 #'
-#' @param x,r,y Matrices of raw data. `x` is for the item scores, `r` the item
-#'   responses, and `y` the item log response times.
+#' @param x,r,y Matrices of raw data. Rows correspond to persons and columns to
+#'   items. `x` is for the item scores, `r` the item responses, and `y` the item
+#'   log response times.
 #'
 #' @param interval The interval to search for the person parameters. Default is
 #'   `c(-4, 4)`.

@@ -7,9 +7,11 @@
 sim(psi, xi)
 }
 \arguments{
-\item{psi}{A matrix of item parameters.}
+\item{psi}{A matrix of item parameters. Rows correspond to items and columns
+to parameters.}
 
-\item{xi}{A matrix of person parameters.}
+\item{xi}{A matrix of person parameters. Rows correspond to persons and
+columns to parameters.}
 }
 \value{
 A list is returned. Possible elements include:

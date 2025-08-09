@@ -27,8 +27,8 @@
 #'     thresholds are returned for items for which the cumulative proportion
 #'     correct is consistently above or below `chance`.
 #'
-#' @param t,x Matrices of raw data. `t` is for the item response times and `x`
-#'   the item scores.
+#' @param t,x Matrices of raw data. Rows correspond to persons and columns to
+#'   items. `t` is for the item response times and `x` the item scores.
 #'
 #' @param outlier The percentile(s) above which to delete outliers in `t`.
 #'   Length must be equal to 1 or equal to the total number of items. Default is

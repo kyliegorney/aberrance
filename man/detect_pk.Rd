@@ -50,15 +50,17 @@ Johnson, 2020).
 \item{ci}{A vector of compromised item positions. All other items are
 presumed secure.}
 
-\item{psi}{A matrix of item parameters.}
+\item{psi}{A matrix of item parameters. Rows correspond to items and columns
+to parameters.}
 
-\item{xi, xi_c, xi_s}{Matrices of person parameters. \code{xi} is based on all
-items, \code{xi_c} is based on the compromised items, and \code{xi_s} is based on the
-secure items. If \code{NULL} (default), person parameters are estimated using
-maximum likelihood estimation.}
+\item{xi, xi_c, xi_s}{Matrices of person parameters. Rows correspond to persons
+and columns to parameters. \code{xi} is based on all items, \code{xi_c} is based on
+the compromised items, and \code{xi_s} is based on the secure items. If \code{NULL}
+(default), person parameters are estimated using maximum likelihood
+estimation.}
 
-\item{x, y}{Matrices of raw data. \code{x} is for the item scores and \code{y} the item
-log response times.}
+\item{x, y}{Matrices of raw data. Rows correspond to persons and columns to
+items. \code{x} is for the item scores and \code{y} the item log response times.}
 
 \item{interval}{The interval to search for the person parameters. Default is
 \code{c(-4, 4)}.}

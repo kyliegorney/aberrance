@@ -13,8 +13,8 @@
 #'   - `"GBT_R"` for the conditional \eqn{GBT} statistic (van der Linden &
 #'     Sotaridona, 2006).
 #'
-#' @param x,r Matrices of raw data. `x` is for the item scores and `r` the item
-#'   responses.
+#' @param x,r Matrices of raw data. Rows correspond to persons and columns to
+#'   items. `x` is for the item scores and `r` the item responses.
 #'
 #' @inheritParams detect_pm
 #'
