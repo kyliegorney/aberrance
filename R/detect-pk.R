@@ -336,6 +336,7 @@ detect_pk <- function(method,
     L_T <- compute_L_T(
       ci,
       si,
+      y,
       psi,
       xi[, "tau"],
       xi_c[, "tau"],

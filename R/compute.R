@@ -37,9 +37,17 @@ compute_L_S <- function(x, p_0, p_1, theta_c, theta_s, signed) {
 #' 
 #' @noRd
 
-compute_L_T <- function(ci, si, psi, tau, tau_c, tau_s, signed) {
-  L <- tau_c^2 * sum(psi[ci, "alpha"]^2) + tau_s^2 * sum(psi[si, "alpha"]^2) -
-    tau^2 * sum(psi[, "alpha"]^2)
+compute_L_T <- function(ci, si, y, psi, tau, tau_c, tau_s, signed) {
+  l_0 <- t(-0.5 * log(2 * pi) + log(psi[, "alpha"]) -
+             psi[, "alpha"]^2 / 2 * (t(y) + outer(-psi[, "beta"], tau, "+"))^2)
+  l_1 <- l_0
+  l_1[, ci] <- t(-0.5 * log(2 * pi) + log(psi[ci, "alpha"]) -
+                   psi[ci, "alpha"]^2 / 2 *
+                   (t(y[, ci]) + outer(-psi[ci, "beta"], tau_c, "+"))^2)
+  l_1[, si] <- t(-0.5 * log(2 * pi) + log(psi[si, "alpha"]) -
+                   psi[si, "alpha"]^2 / 2 *
+                   (t(y[, si]) + outer(-psi[si, "beta"], tau_s, "+"))^2)
+  L <- 2 * rowSums(l_1 - l_0)
   if (signed) {
     L[L < 0] <- 0
     sign(tau_c - tau_s) * sqrt(L)

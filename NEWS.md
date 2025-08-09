@@ -4,6 +4,8 @@
 
 * Fix handling of missing data in `detect_as()`.
 
+* Generalize computation of the likelihood ratio test statistic for item response times.
+
 # aberrance 0.2.1
 
 * Convert `compute_GBT()` and `compute_M4()` to C++.
