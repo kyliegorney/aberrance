@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![](https://www.r-pkg.org/badges/version/aberrance)](https://CRAN.R-project.org/package=aberrance)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/aberrance)](https://CRAN.R-project.org/package=aberrance)
 [![](https://cranlogs.r-pkg.org/badges/aberrance)](https://CRAN.R-project.org/package=aberrance)
 <!-- badges: end -->
 
