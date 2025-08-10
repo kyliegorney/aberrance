@@ -164,8 +164,11 @@
 detect_pk <- function(method,
                       ci,
                       psi,
-                      xi = NULL, xi_c = NULL, xi_s = NULL,
-                      x = NULL, y = NULL,
+                      xi = NULL,
+                      xi_c = NULL,
+                      xi_s = NULL,
+                      x = NULL,
+                      y = NULL,
                       interval = c(-4, 4),
                       alpha = 0.05,
                       cutoff = 0.05) {

@@ -10,7 +10,7 @@ Authors@R: c(
     ),
     person(
       "Jiayi", "Deng",
-      role = c("aut"),
+      role = "aut",
       comment = c(ORCID = "0000-0002-1962-2956")
     )
   )

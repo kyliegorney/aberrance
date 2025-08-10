@@ -206,7 +206,9 @@
 detect_pm <- function(method,
                       psi,
                       xi = NULL,
-                      x = NULL, r = NULL, y = NULL,
+                      x = NULL,
+                      r = NULL,
+                      y = NULL,
                       interval = c(-4, 4),
                       alpha = 0.05) {
 
@@ -216,17 +218,23 @@ detect_pm <- function(method,
     for (m in method) {
       if (extract(m, 3) == "*") {
         if (extract(m, 1:2) %in% c("L_ST", "L_RT")) {
-          tmp <- c(tmp, paste(
-            extract(m, 1:2),
-            c("NO", "TS"),
-            sep = "_"
-          ))
+          tmp <- c(
+            tmp,
+            paste(
+              extract(m, 1:2),
+              c("NO", "TS"),
+              sep = "_"
+            )
+          )
         } else {
-          tmp <- c(tmp, paste(
-            extract(m, 1:2),
-            c("NO", "CF", "CS", "EW", "TS", "TSCF", "TSCS", "TSEW"),
-            sep = "_"
-          ))
+          tmp <- c(
+            tmp,
+            paste(
+              extract(m, 1:2),
+              c("NO", "CF", "CS", "EW", "TS", "TSCF", "TSCS", "TSEW"),
+              sep = "_"
+            )
+          )
         }
       } else {
         tmp <- c(tmp, m)
@@ -363,10 +371,16 @@ detect_pm <- function(method,
   if ("Q_ST" %in% md) {
     tmp <- mdc[md == "Q_ST"]
     stat[, tmp] <-
-      qchisq(pnorm(L_S_in_Q_ST, lower.tail = TRUE),
-             df = 1, lower.tail = FALSE) +
-      qchisq(pchisq(L_T, df = n - 1, lower.tail = FALSE),
-             df = 1, lower.tail = FALSE)
+      qchisq(
+        pnorm(L_S_in_Q_ST, lower.tail = TRUE),
+        df = 1,
+        lower.tail = FALSE
+      ) +
+      qchisq(
+        pchisq(L_T, df = n - 1, lower.tail = FALSE),
+        df = 1,
+        lower.tail = FALSE
+      )
   }
   if ("L_ST" %in% md) {
     m <- count(psi, ignore = "lambda1")
@@ -382,10 +396,16 @@ detect_pm <- function(method,
   if ("Q_RT" %in% md) {
     tmp <- mdc[md == "Q_RT"]
     stat[, tmp] <-
-      qchisq(pnorm(L_R_in_Q_RT, lower.tail = TRUE),
-             df = 1, lower.tail = FALSE) +
-      qchisq(pchisq(L_T, df = n - 1, lower.tail = FALSE),
-             df = 1, lower.tail = FALSE)
+      qchisq(
+        pnorm(L_R_in_Q_RT, lower.tail = TRUE),
+        df = 1,
+        lower.tail = FALSE
+      ) +
+      qchisq(
+        pchisq(L_T, df = n - 1, lower.tail = FALSE),
+        df = 1,
+        lower.tail = FALSE
+      )
   }
   if ("L_RT" %in% md) {
     m <- count(psi)

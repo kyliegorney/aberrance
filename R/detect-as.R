@@ -210,7 +210,9 @@
 detect_as <- function(method,
                       psi,
                       xi = NULL,
-                      x = NULL, r = NULL, y = NULL,
+                      x = NULL,
+                      r = NULL,
+                      y = NULL,
                       interval = c(-4, 4),
                       alpha = 0.05) {
 
@@ -230,10 +232,12 @@ detect_as <- function(method,
   }
   method <- match.arg(
     arg = unique(method),
-    choices = c("OMG_S", "WOMG_S", "GBT_S", "M4_S",
-                "OMG_R", "WOMG_R", "GBT_R", "M4_R",
-                "OMG_ST", "GBT_ST",
-                "OMG_RT", "GBT_RT"),
+    choices = c(
+      "OMG_S", "WOMG_S", "GBT_S", "M4_S",
+      "OMG_R", "WOMG_R", "GBT_R", "M4_R",
+      "OMG_ST", "GBT_ST",
+      "OMG_RT", "GBT_RT"
+    ),
     several.ok = TRUE
   )
   check_data(x, r, y)

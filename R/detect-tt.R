@@ -174,9 +174,15 @@
 
 detect_tt <- function(method,
                       psi,
-                      xi = NULL, xi_c = NULL, xi_s = NULL,
-                      x = NULL, d = NULL, r = NULL,
-                      x_0 = NULL, d_0 = NULL, r_0 = NULL,
+                      xi = NULL,
+                      xi_c = NULL,
+                      xi_s = NULL,
+                      x = NULL,
+                      d = NULL,
+                      r = NULL,
+                      x_0 = NULL,
+                      d_0 = NULL,
+                      r_0 = NULL,
                       interval = c(-4, 4),
                       alpha = 0.05,
                       group = NULL,
@@ -188,17 +194,23 @@ detect_tt <- function(method,
     for (m in method) {
       if (extract(m, 3) == "*") {
         if (is.null(group)) {
-          tmp <- c(tmp, paste(
-            extract(m, 1:2),
-            c("NO", "CO"),
-            sep = "_"
-          ))
+          tmp <- c(
+            tmp,
+            paste(
+              extract(m, 1:2),
+              c("NO", "CO"),
+              sep = "_"
+            )
+          )
         } else {
-          tmp <- c(tmp, paste(
-            extract(m, 1:2),
-            c("NO", "CO", "TS"),
-            sep = "_"
-          ))
+          tmp <- c(
+            tmp,
+            paste(
+              extract(m, 1:2),
+              c("NO", "CO", "TS"),
+              sep = "_"
+            )
+          )
         }
       } else {
         tmp <- c(tmp, m)

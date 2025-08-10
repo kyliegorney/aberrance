@@ -146,7 +146,7 @@
 #'   Sigma = matrix(c(1.00, 0.20, 0.20, 0.15), ncol = 2)
 #' )
 #'
-#' # Simulate item scores and response times
+#' # Simulate uncontaminated data
 #' dat <- sim(psi, xi)
 #' x <- dat$x
 #' t <- exp(dat$y)
@@ -383,13 +383,16 @@ detect_rg <- function(method,
       rtf <- 1 - colMeans(flag, na.rm = TRUE)
       unmotivated <- mean(rowSums(flag, na.rm = TRUE) >= min_item)
     }
-    out <- c(out, list(
-      thr = thr,
-      flag = flag,
-      rte = rte,
-      rtf = rtf,
-      unmotivated = unmotivated
-    ))
+    out <- c(
+      out,
+      list(
+        thr = thr,
+        flag = flag,
+        rte = rte,
+        rtf = rtf,
+        unmotivated = unmotivated
+      )
+    )
   }
 
   # Output

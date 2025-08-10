@@ -122,7 +122,8 @@
 detect_ac <- function(method,
                       psi,
                       xi = NULL,
-                      x = NULL, r = NULL,
+                      x = NULL,
+                      r = NULL,
                       interval = c(-4, 4),
                       alpha = 0.05) {
 
