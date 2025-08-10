@@ -1,5 +1,7 @@
 # aberrance (development version)
 
+* Add `detect_cp()` to detect change point.
+
 * Delete distractor-based statistics from `detect_pm()`.
 
 * Fix handling of missing data in `detect_as()`.
