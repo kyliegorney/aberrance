@@ -18,6 +18,10 @@ several types of aberrant behavior, including:
 - **Answer similarity**, using statistics such as the $GBT$ statistic
   (van der Linden & Sotaridona, 2006) and the $M4$ statistic (Maynes,
   2014).
+- **Change point**, using statistics such as the likelihood ratio
+  test-based statistic, the score test-based statistic, and the Wald
+  test-based statistic (Shao et al., 2016; Sinharay, 2016; Tu et al.,
+  2023).
 - **Nonparametric misfit**, using statistics such as the $ZU3$ statistic
   (van der Flier, 1982) and the $H^T$ statistic (Sijtsma, 1986).
 - **Parametric misfit**, using statistics such as the standardized

@@ -2,6 +2,7 @@
 
 export(detect_ac)
 export(detect_as)
+export(detect_cp)
 export(detect_nm)
 export(detect_pk)
 export(detect_pm)

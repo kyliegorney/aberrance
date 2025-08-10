@@ -25,6 +25,7 @@ The *aberrance* package contains a collection of functions for detecting several
 
 - **Answer copying**, using statistics such as the $\omega$ statistic (Wollack, 1997).
 - **Answer similarity**, using statistics such as the $GBT$ statistic (van der Linden & Sotaridona, 2006) and the $M4$ statistic (Maynes, 2014).
+- **Change point**, using statistics such as the likelihood ratio test-based statistic, the score test-based statistic, and the Wald test-based statistic (Shao et al., 2016; Sinharay, 2016; Tu et al., 2023).
 - **Nonparametric misfit**, using statistics such as the $ZU3$ statistic (van der Flier, 1982) and the $H^T$ statistic (Sijtsma, 1986).
 - **Parametric misfit**, using statistics such as the standardized log-likelihood statistic (Drasgow et al., 1985) and its various corrections (Bedrick, 1997; Gorney et al., 2024; Molenaar & Hoijtink, 1990; Snijders, 2001).
 - **Preknowledge**, using statistics such as the signed likelihood ratio test statistic (Sinharay, 2017).

@@ -6,7 +6,7 @@
 \alias{aberrance-package}
 \title{aberrance: Detect Aberrant Behavior in Test Data}
 \description{
-Detect several types of aberrant behavior, including answer copying, answer similarity, nonparametric misfit, parametric misfit, preknowledge, rapid guessing, and test tampering.
+Detect several types of aberrant behavior, including answer copying, answer similarity, change point, nonparametric misfit, parametric misfit, preknowledge, rapid guessing, and test tampering.
 }
 \seealso{
 Useful links:

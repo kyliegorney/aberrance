@@ -15,8 +15,8 @@ Authors@R: c(
     )
   )
 Description: Detect several types of aberrant behavior, including answer
-    copying, answer similarity, nonparametric misfit, parametric misfit,
-    preknowledge, rapid guessing, and test tampering.
+    copying, answer similarity, change point, nonparametric misfit, parametric
+    misfit, preknowledge, rapid guessing, and test tampering.
 License: GPL (>= 3)
 URL: https://github.com/kyliegorney/aberrance
 BugReports: https://github.com/kyliegorney/aberrance/issues
