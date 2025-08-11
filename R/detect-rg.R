@@ -247,8 +247,11 @@ detect_rg <- function(method,
   if (length(outlier) == 1) {
     outlier <- rep(outlier, times = n)
   } else if (length(outlier) != n) {
-    stop("The length of `outlier` must be equal to 1 or equal to the total ",
-         "number of items.", call. = FALSE)
+    stop(
+      "The length of `outlier` must be equal to 1 or equal to the total ",
+      "number of items.",
+      call. = FALSE
+    )
   }
   if (any(outlier < 0) || any(outlier > 100)) {
     stop("`outlier` must be between 0 and 100.", call. = FALSE)
@@ -283,8 +286,11 @@ detect_rg <- function(method,
       if (length(chance) == 1) {
         chance <- rep(chance, times = n)
       } else if (length(chance) != n) {
-        stop("The length of `chance` must be equal to 1 or equal to the total ",
-             "number of items.", call. = FALSE)
+        stop(
+          "The length of `chance` must be equal to 1 or equal to the total ",
+          "number of items.",
+          call. = FALSE
+        )
       }
       if (any(chance < 0) || any(chance > 1)) {
         stop("`chance` must be between 0 and 1.", call. = FALSE)
@@ -347,8 +353,11 @@ detect_rg <- function(method,
       if (length(thr) == 1) {
         thr <- rep(thr, times = n)
       } else if (length(thr) != n) {
-        stop("The length of `thr` must be equal to 1 or equal to the total ",
-             "number of items.", call. = FALSE)
+        stop(
+          "The length of `thr` must be equal to 1 or equal to the total ",
+          "number of items.",
+          call. = FALSE
+        )
       }
     } else if (method == "NT") {
       if (any(nt < 0) || any(nt > 100)) {

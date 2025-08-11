@@ -115,7 +115,7 @@
 #' 
 #' # Detect change point
 #' out <- detect_cp(
-#'   method = c("L_S_MAX1", "L_T_MAX1"),
+#'   method = c("L_S_MAX1", "L_T_MIN1"),
 #'   cpi = c(1, n - 1),
 #'   psi = psi,
 #'   x = x,
@@ -145,7 +145,7 @@
 #' # Detect change point in second half of the test
 #' out <- detect_cp(
 #'   method = c("L_S_MAX1", "S_S_MAX1", "W_S_MAX1"),
-#'   cpi = c(20, n - 1),
+#'   cpi = c(n / 2, n - 1),
 #'   psi = psi,
 #'   x = x
 #' )
@@ -163,14 +163,23 @@ detect_cp <- function(method,
   
   # Checks
   if (cpi[1] > cpi[2]) {
-    stop("The lower endpoint of the change point interval must be less than ",
-         "or equal to the upper endpoint.", call. = FALSE)
+    stop(
+      "The lower endpoint of the change point interval must be less than or ",
+      "equal to the upper endpoint.",
+      call. = FALSE
+    )
   } else if (cpi[1] < 1) {
-    stop("The lower endpoint of the change point interval must be greater ",
-         "than or equal to 1.", call. = FALSE)
+    stop(
+      "The lower endpoint of the change point interval must be greater than ",
+      "or equal to 1.",
+      call. = FALSE
+    )
   } else if (cpi[2] >= nrow(psi)) {
-    stop("The upper endpoint of the change point interval must be less than ",
-         "the number of items in the test.", call. = FALSE)
+    stop(
+      "The upper endpoint of the change point interval must be less than the ",
+      "number of items in the test.",
+      call. = FALSE
+    )
   }
   if (any(extract(method, 3) == "*")) {
     tmp <- NULL

@@ -244,8 +244,11 @@ detect_pm <- function(method,
   }
   if (any(c("S", "ST") %in% extract(method, 2)) &&
       any(c("R", "RT") %in% extract(method, 2))) {
-    stop("`method` may contain either score-based statistics or ",
-         "response-based statistics, but not both.", call. = FALSE)
+    stop(
+      "`method` may contain either score-based statistics or response-based ",
+      "statistics, but not both.",
+      call. = FALSE
+    )
   }
   if (any(c("S", "ST") %in% extract(method, 2))) {
     check_par("x", psi, xi)
@@ -257,13 +260,19 @@ detect_pm <- function(method,
     check_par("y", psi, xi)
     if (any(paste("L_ST", c("CF", "CS", "EW", "TSCF", "TSCS", "TSEW"),
                   sep = "_") %in% method)) {
-      warning("The L_ST statistic cannot be computed using the CF, CS, EW, ",
-              "TSCF, TSCS, or TSEW corrections.", call. = FALSE)
+      warning(
+        "The L_ST statistic cannot be computed using the CF, CS, EW, TSCF, ",
+        "TSCS, or TSEW corrections.",
+        call. = FALSE
+      )
     }
     if (any(paste("L_RT", c("CF", "CS", "EW", "TSCF", "TSCS", "TSEW"),
                   sep = "_") %in% method)) {
-      warning("The L_RT statistic cannot be computed using the CF, CS, EW, ",
-              "TSCF, TSCS, or TSEW corrections.", call. = FALSE)
+      warning(
+        "The L_RT statistic cannot be computed using the CF, CS, EW, TSCF, ",
+        "TSCS, or TSEW corrections.",
+        call. = FALSE
+      )
     }
   }
   mdc <- match.arg(

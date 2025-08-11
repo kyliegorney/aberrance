@@ -178,18 +178,18 @@
 detect_nm <- function(method, x = NULL, y = NULL) {
 
   # Checks
-  if (any(c("G_S", "NC_S", "U1_S", "U3_S", "ZU3_S", "A_S", "D_S", "E_S",
+  if (any(c("NC_S", "ZU3_S", "A_S", "D_S", "E_S",
             "C_S", "MC_S", "PC_S", "HT_S") %in% method)) {
-    if (max(x) > 1 &&
-        any(c("NC_S", "ZU3_S", "A_S", "D_S", "E_S",
-              "C_S", "MC_S", "PC_S", "HT_S") %in% method)) {
+    if (max(x) > 1) {
       method <- setdiff(
         method,
         c("NC_S", "ZU3_S", "A_S", "D_S", "E_S", "C_S", "MC_S", "PC_S", "HT_S")
       )
-      warning("The NC_S, ZU3_S, A_S, D_S, E_S, C_S, MC_S, PC_S, and HT_S ",
-              "statistics cannot be computed for polytomous item scores.",
-              call. = FALSE)
+      warning(
+        "The NC_S, ZU3_S, A_S, D_S, E_S, C_S, MC_S, PC_S, and HT_S statistics ",
+        "cannot be computed for polytomous item scores.",
+        call. = FALSE
+      )
     }
   }
   method <- match.arg(

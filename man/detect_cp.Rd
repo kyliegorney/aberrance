@@ -132,7 +132,7 @@ y[cv, ci] <- runif(length(cv) * length(ci), min = log(1), max = log(10))
 
 # Detect change point
 out <- detect_cp(
-  method = c("L_S_MAX1", "L_T_MAX1"),
+  method = c("L_S_MAX1", "L_T_MIN1"),
   cpi = c(1, n - 1),
   psi = psi,
   x = x,
@@ -162,7 +162,7 @@ x[cv, ci] <- rbinom(length(cv) * length(ci), size = 1, prob = 0.25)
 # Detect change point in second half of the test
 out <- detect_cp(
   method = c("L_S_MAX1", "S_S_MAX1", "W_S_MAX1"),
-  cpi = c(20, n - 1),
+  cpi = c(n / 2, n - 1),
   psi = psi,
   x = x
 )

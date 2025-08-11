@@ -219,27 +219,36 @@ detect_tt <- function(method,
     method <- tmp
   }
   if (any("SD" %in% extract(method, 2)) && any("R" %in% extract(method, 2))) {
-    stop("`method` may contain either score and distractor-based statistics ",
-         "or response-based statistics, but not both.", call. = FALSE)
+    stop(
+      "`method` may contain either score and distractor-based statistics or ",
+      "response-based statistics, but not both.",
+      call. = FALSE
+    )
   }
   if (any("SD" %in% extract(method, 2))) {
     check_par("x", psi)
     if (is.null(group)) {
       if ("EDI_SD_TS" %in% method) {
         method <- setdiff(method, "EDI_SD_TS")
-        warning("The EDI_SD_TS statistic cannot be computed at the person ",
-                "level.", call. = FALSE)
+        warning(
+          "The EDI_SD_TS statistic cannot be computed at the person level.",
+          call. = FALSE
+        )
       }
     } else {
       if ("GBT_SD" %in% method) {
         method <- setdiff(method, "GBT_SD")
-        warning("The GBT_SD statistic cannot be computed at the group level.",
-                call. = FALSE)
+        warning(
+          "The GBT_SD statistic cannot be computed at the group level.",
+          call. = FALSE
+        )
       }
       if ("L_SD" %in% method) {
         method <- setdiff(method, "L_SD")
-        warning("The L_SD statistic cannot be computed at the group level.",
-                call. = FALSE)
+        warning(
+          "The L_SD statistic cannot be computed at the group level.",
+          call. = FALSE
+        )
       }
     }
   } else if (any("R" %in% extract(method, 2))) {
@@ -247,19 +256,25 @@ detect_tt <- function(method,
     if (is.null(group)) {
       if ("EDI_R_TS" %in% method) {
         method <- setdiff(method, "EDI_R_TS")
-        warning("The EDI_R_TS statistic cannot be computed at the person ",
-                "level.", call. = FALSE)
+        warning(
+          "The EDI_R_TS statistic cannot be computed at the person level.",
+          call. = FALSE
+        )
       }
     } else {
       if ("GBT_R" %in% method) {
         method <- setdiff(method, "GBT_R")
-        warning("The GBT_R statistic cannot be computed at the group level.",
-                call. = FALSE)
+        warning(
+          "The GBT_R statistic cannot be computed at the group level.",
+          call. = FALSE
+        )
       }
       if ("L_R" %in% method) {
         method <- setdiff(method, "L_R")
-        warning("The L_R statistic cannot be computed at the group level.",
-                call. = FALSE)
+        warning(
+          "The L_R statistic cannot be computed at the group level.",
+          call. = FALSE
+        )
       }
     }
   }

@@ -129,8 +129,11 @@ detect_ac <- function(method,
 
   # Checks
   if (any("S" %in% extract(method, 2)) && ("R" %in% extract(method, 2))) {
-    stop("`method` may contain either score-based statistics or ",
-         "response-based statistics, but not both.", call. = FALSE)
+    stop(
+      "`method` may contain either score-based statistics or response-based ",
+      "statistics, but not both.",
+      call. = FALSE
+    )
   }
   if (any("S" %in% extract(method, 2))) {
     check_par("x", psi, xi)

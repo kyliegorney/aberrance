@@ -219,8 +219,11 @@ detect_as <- function(method,
   # Checks
   if (any(c("S", "ST") %in% extract(method, 2)) &&
       any(c("R", "RT") %in% extract(method, 2))) {
-    stop("`method` may contain either score-based statistics or ",
-         "response-based statistics, but not both.", call. = FALSE)
+    stop(
+      "`method` may contain either score-based statistics or response-based ",
+      "statistics, but not both.",
+      call. = FALSE
+    )
   }
   if (any(c("S", "ST") %in% extract(method, 2))) {
     check_par("x", psi, xi)

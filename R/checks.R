@@ -23,8 +23,11 @@ check_par <- function(data, psi, xi = NULL) {
       all(c("a", "b1", "b2") %in% colnames(psi)),
       all(c("a", "c0", "c1") %in% colnames(psi))
     ) != 1) {
-      stop("`psi` must contain columns: (a) a, b, c, (b) a, b1, b2, ..., or ",
-           "(c) a, c0, c1, ...", call. = FALSE)
+      stop(
+        "`psi` must contain columns: (a) a, b, c, (b) a, b1, b2, ..., or (c) ",
+        "a, c0, c1, ...",
+        call. = FALSE
+      )
     } else if ("b" %in% colnames(psi)) {
       if (any(is.na(psi[, c("a", "b", "c")]))) {
         stop("`psi` must not contain missing values: a, b, c.", call. = FALSE)
@@ -37,8 +40,10 @@ check_par <- function(data, psi, xi = NULL) {
         paste0("b", 1:sum(colnames(psi) %in% paste0("b", 1:9)))
       ))
       if (any(!tmp %in% colnames(psi))) {
-        stop("`psi` must contain columns: ", paste(tmp, collapse = ", "), ".",
-             call. = FALSE)
+        stop(
+          "`psi` must contain columns: ", paste(tmp, collapse = ", "), ".",
+          call. = FALSE
+        )
       } else if (any(is.na(psi[, c("a", "b1")]))) {
         stop("`psi` must not contain missing values: a, b1.", call. = FALSE)
       }
@@ -50,8 +55,10 @@ check_par <- function(data, psi, xi = NULL) {
         paste0("c", 1:sum(colnames(psi) %in% paste0("c", 1:9)))
       ))
       if (any(!tmp %in% colnames(psi))) {
-        stop("`psi` must contain columns: ", paste(tmp, collapse = ", "), ".",
-             call. = FALSE)
+        stop(
+          "`psi` must contain columns: ", paste(tmp, collapse = ", "), ".",
+          call. = FALSE
+        )
       } else if (any(is.na(psi[, c("a", "c0", "c1")]))) {
         stop("`psi` must not contain missing values: a, c0, c1.", call. = FALSE)
       }
@@ -60,8 +67,10 @@ check_par <- function(data, psi, xi = NULL) {
   if (("d" %in% data ) || ("r" %in% data)) {
     if (sum(grepl("lambda", colnames(psi))) !=
         sum(grepl("zeta", colnames(psi)))) {
-      stop("`psi` must contain equal numbers of lambdas and zetas.",
-           call. = FALSE)
+      stop(
+        "`psi` must contain equal numbers of lambdas and zetas.",
+        call. = FALSE
+      )
     }
     tmp <- unique(c(
       "lambda1",
@@ -72,11 +81,15 @@ check_par <- function(data, psi, xi = NULL) {
       paste0("zeta", 1:sum(colnames(psi) %in% paste0("lambda", 1:9)))
     ))
     if (any(!tmp %in% colnames(psi))) {
-      stop("`psi` must contain columns: ", paste(tmp, collapse = ", "), ".",
-           call. = FALSE)
+      stop(
+        "`psi` must contain columns: ", paste(tmp, collapse = ", "), ".",
+        call. = FALSE
+      )
     } else if (any(is.na(psi[, c("lambda1", "zeta1")]))) {
-      stop("`psi` must not contain missing values: lambda1, zeta1.",
-           call. = FALSE)
+      stop(
+        "`psi` must not contain missing values: lambda1, zeta1.",
+        call. = FALSE
+      )
     }
   }
   if ("y" %in% data) {
@@ -89,8 +102,10 @@ check_par <- function(data, psi, xi = NULL) {
   if (!is.null(xi)) {
     tmp <- c(x = "theta", r = "eta", d = "eta", y = "tau")[data]
     if (any(!tmp %in% colnames(xi))) {
-      stop("`xi` must contain columns: ", paste(tmp, collapse = ", "), ".",
-           call. = FALSE)
+      stop(
+        "`xi` must contain columns: ", paste(tmp, collapse = ", "), ".",
+        call. = FALSE
+      )
     }
   }
 }

@@ -186,8 +186,11 @@ detect_pk <- function(method,
       if ((("b" %in% colnames(psi)) && any(psi[, "c"] > 0)) ||
           ("b1" %in% colnames(psi))) {
         method <- setdiff(method, c("ML_S", "LR_S"))
-        warning("The ML_S and LR_S statistics cannot be computed under the ",
-                "3PL model or the graded response model.", call. = FALSE)
+        warning(
+          "The ML_S and LR_S statistics cannot be computed under the 3PL ",
+          "model or the graded response model.",
+          call. = FALSE
+        )
       }
     }
   }
